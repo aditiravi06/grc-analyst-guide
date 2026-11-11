@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>UT Cybersecurity GRC Analyst Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
 :root {
   --orange: #FF8200;
@@ -34,28 +35,67 @@
 body{font-family:'Inter',system-ui,sans-serif;background:var(--grey-100);color:var(--grey-800);font-size:14px;line-height:1.6;min-height:100vh;}
 
 /* HEADER */
-.top-header{background:var(--white);border-bottom:4px solid var(--orange);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
+.top-header{background:var(--white);border-bottom:4px solid var(--orange);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
 .header-brand{display:flex;align-items:center;gap:12px;}
 .header-icon{width:40px;height:40px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;}
 .header-title{font-size:16px;font-weight:800;color:var(--grey-800);}
 .header-sub{font-size:11px;color:var(--grey-500);font-weight:500;}
 .header-badge{background:var(--orange-lt);color:var(--orange-dk);border:1px solid var(--orange-md);font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;}
 .header-actions{display:flex;align-items:center;gap:8px;}
-.hdr-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;}
+.hdr-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;font-family:inherit;}
 .hdr-btn-primary{background:var(--orange);color:#fff;}
 .hdr-btn-primary:hover{background:var(--orange-dk);}
 .hdr-btn-outline{background:var(--white);color:var(--grey-700);border:1px solid var(--grey-300);}
 .hdr-btn-outline:hover{background:var(--grey-50);}
 
+/* ============ GLOBAL SEARCH ============ */
+.search-wrap{position:relative;flex:1;max-width:460px;}
+.search-field{display:flex;align-items:center;gap:8px;background:var(--grey-50);border:1px solid var(--grey-300);border-radius:10px;padding:0 10px;height:38px;transition:all 0.15s;}
+.search-field:focus-within{border-color:var(--orange);background:var(--white);box-shadow:0 0 0 3px rgba(255,130,0,0.14);}
+.search-field .s-ico{color:var(--grey-400);font-size:14px;}
+#search-input{flex:1;border:none;background:none;outline:none;font-family:inherit;font-size:13px;color:var(--grey-800);height:100%;}
+#search-input::placeholder{color:var(--grey-400);}
+.search-kbd{font-size:10px;font-weight:700;color:var(--grey-400);border:1px solid var(--grey-300);border-bottom-width:2px;border-radius:5px;padding:1px 5px;background:var(--white);}
+.search-clear{display:none;border:none;background:var(--grey-200);color:var(--grey-600);width:20px;height:20px;border-radius:50%;font-size:12px;line-height:1;cursor:pointer;}
+.search-clear:hover{background:var(--red);color:#fff;}
+.search-clear.show{display:block;}
+
+.search-results{display:none;position:absolute;top:46px;left:0;right:0;max-height:62vh;overflow-y:auto;background:var(--white);border:1px solid var(--grey-200);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,0.18);z-index:400;}
+.search-results.open{display:block;}
+.search-meta{padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--grey-500);background:var(--grey-50);border-bottom:1px solid var(--grey-200);position:sticky;top:0;}
+.sr-group{font-size:10px;font-weight:800;letter-spacing:0.6px;text-transform:uppercase;color:var(--orange-dk);background:var(--orange-lt);padding:5px 14px;border-top:1px solid var(--orange-md);border-bottom:1px solid var(--orange-md);}
+.sr-item{padding:10px 14px;border-bottom:1px solid var(--grey-100);cursor:pointer;transition:background 0.12s;}
+.sr-item:hover,.sr-item.active{background:var(--orange-lt);}
+.sr-title{font-size:12.5px;font-weight:700;color:var(--grey-800);margin-bottom:2px;}
+.sr-snip{font-size:11.5px;color:var(--grey-500);line-height:1.5;}
+.sr-item mark,.sr-title mark{background:#FDE68A;color:var(--grey-800);border-radius:3px;padding:0 2px;font-weight:700;}
+.sr-empty{padding:28px 18px;text-align:center;color:var(--grey-500);font-size:12.5px;}
+.sr-empty .big{font-size:30px;display:block;margin-bottom:8px;}
+
+@keyframes searchFlash{0%{box-shadow:0 0 0 0 rgba(255,130,0,0.0);background:var(--orange-lt);}30%{box-shadow:0 0 0 5px rgba(255,130,0,0.35);background:var(--orange-lt);}100%{box-shadow:0 0 0 0 rgba(255,130,0,0);background:transparent;}}
+.search-flash{animation:searchFlash 1.9s ease;border-radius:12px;scroll-margin-top:150px;}
+
+@media(max-width:1050px){.search-wrap{max-width:260px;}.header-sub{display:none;}}
+@media(max-width:820px){.search-kbd{display:none;}.header-badge{display:none;}}
+
 /* HORIZONTAL TABS */
 .tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--grey-200);position:sticky;top:64px;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
 .tab-bar{display:flex;overflow-x:auto;padding:0 20px;scrollbar-width:none;-ms-overflow-style:none;}
 .tab-bar::-webkit-scrollbar{display:none;}
-.tab-btn{display:flex;align-items:center;gap:7px;padding:14px 16px;font-size:12.5px;font-weight:500;color:var(--grey-500);border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:all 0.15s;margin-bottom:-1px;}
+.tab-btn{display:flex;align-items:center;gap:7px;padding:14px 16px;font-size:12.5px;font-weight:500;color:var(--grey-500);border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:all 0.15s;margin-bottom:-1px;font-family:inherit;}
 .tab-btn:hover{color:var(--grey-800);}
 .tab-btn.active{color:var(--orange-dk);border-bottom-color:var(--orange);font-weight:700;}
 .tab-btn .tab-num{background:var(--grey-200);color:var(--grey-500);font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;}
 .tab-btn.active .tab-num{background:var(--orange-md);color:var(--orange-dk);}
+
+.tab-wip{background:var(--amber-lt);color:var(--amber);border:1px solid #FDE68A;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:1px 6px;border-radius:10px;}
+.wip-pill{display:inline-block;vertical-align:middle;background:var(--amber-lt);color:var(--amber);border:1px solid #FDE68A;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;padding:3px 10px;border-radius:20px;margin-left:8px;}
+.link-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.link-list li{border:1px solid var(--grey-200);border-left:3px solid var(--orange);border-radius:8px;padding:10px 12px;background:var(--grey-50);transition:all 0.15s;}
+.link-list li:hover{background:var(--orange-lt);border-color:var(--orange-md);border-left-color:var(--orange);}
+.link-list a{display:block;font-size:13px;font-weight:700;color:var(--orange-dk);text-decoration:none;}
+.link-list a:hover{text-decoration:underline;}
+.link-list .link-note{display:block;font-size:11.5px;color:var(--grey-500);margin-top:2px;}
 
 /* MAIN */
 .main{padding:28px 32px;max-width:1200px;margin:0 auto;}
@@ -133,7 +173,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--grey-100);color:v
 .acc-body.open{display:block;}
 
 /* COPY BUTTON */
-.copy-btn{display:inline-flex;align-items:center;gap:5px;background:var(--orange);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;margin-top:10px;}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;background:var(--orange);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;margin-top:10px;font-family:inherit;}
 .copy-btn:hover{background:var(--orange-dk);}
 .copy-btn.copied{background:var(--green);}
 
@@ -188,1379 +228,1028 @@ ol.styled li{padding:5px 0;font-size:13px;color:var(--grey-700);}
 
 .highlight-box{background:var(--orange-lt);border:1px solid var(--orange-md);border-radius:10px;padding:16px;margin-bottom:16px;}
 .highlight-box-title{font-weight:800;font-size:13px;color:var(--orange-dk);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+
+/* ============================================================
+   SCREENSHOT / LIGHTBOX ADD-ON
+   ============================================================ */
+.shot-btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue-lt);color:var(--blue);border:1px solid #BFDBFE;border-radius:7px;padding:5px 11px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;margin-top:8px;font-family:inherit;}
+.shot-btn:hover{background:#DBEAFE;border-color:var(--blue);}
+.shot-btn.missing{background:var(--grey-100);color:var(--grey-400);border-color:var(--grey-200);cursor:not-allowed;}
+
+.shot-thumb{display:inline-block;border:1px solid var(--grey-300);border-radius:8px;padding:3px;background:var(--white);cursor:zoom-in;max-width:180px;transition:all 0.15s;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.shot-thumb:hover{border-color:var(--orange);box-shadow:0 4px 12px rgba(0,0,0,0.12);}
+.shot-thumb img{display:block;width:100%;border-radius:5px;}
+
+.lightbox{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(17,24,39,0.82);padding:32px;backdrop-filter:blur(2px);}
+.lightbox.open{display:flex;animation:lbFade 0.15s ease;}
+@keyframes lbFade{from{opacity:0;}to{opacity:1;}}
+.lightbox-inner{position:relative;max-width:1100px;max-height:90vh;display:flex;flex-direction:column;background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:lbZoom 0.18s ease;}
+@keyframes lbZoom{from{transform:scale(0.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lightbox-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--grey-50);border-bottom:1px solid var(--grey-200);}
+.lightbox-caption{font-size:13px;font-weight:700;color:var(--grey-800);}
+.lightbox-close{width:30px;height:30px;flex-shrink:0;border:none;border-radius:8px;background:var(--grey-200);color:var(--grey-700);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.lightbox-close:hover{background:var(--red);color:#fff;}
+.lightbox-imgwrap{overflow:auto;background:var(--grey-100);display:flex;align-items:center;justify-content:center;}
+.lightbox-imgwrap img{display:block;max-width:100%;height:auto;}
+.lightbox-missing{padding:60px 40px;text-align:center;color:var(--grey-500);font-size:13px;}
+.lightbox-missing .big{font-size:40px;margin-bottom:10px;}
+
+/* UTK AI Assistant */
+.utk-ai-launcher{
+  position:fixed;right:24px;bottom:24px;z-index:1100;border:0;cursor:pointer;
+  display:flex;align-items:center;gap:10px;padding:13px 17px;border-radius:999px;
+  color:#fff;background:linear-gradient(135deg,#FF8200,#d96b00);
+  box-shadow:0 12px 28px rgba(217,107,0,.30);font:700 14px/1 Inter,system-ui,sans-serif;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.utk-ai-launcher:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(217,107,0,.38)}
+.utk-ai-launcher .utk-ai-spark{font-size:18px;line-height:1}
+.utk-ai-panel{
+  position:fixed;right:24px;bottom:86px;z-index:1101;width:min(390px,calc(100vw - 32px));
+  height:min(570px,calc(100vh - 118px));display:none;flex-direction:column;
+  overflow:hidden;background:#fff;border:1px solid #e5e7eb;border-radius:18px;
+  box-shadow:0 22px 54px rgba(31,41,55,.24);
+}
+.utk-ai-panel.open{display:flex;animation:utkAiIn .18s ease-out}
+@keyframes utkAiIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.utk-ai-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#1f2937;color:#fff}
+.utk-ai-title{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px}
+.utk-ai-badge{font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:20px;background:rgba(255,255,255,.14);color:#fff}
+.utk-ai-close{border:0;background:transparent;color:#fff;cursor:pointer;font-size:21px;line-height:1;padding:2px 5px}
+.utk-ai-intro{padding:13px 16px;background:#fff3e6;color:#5d3a14;font-size:12px;border-bottom:1px solid #ffe0bc}
+.utk-ai-messages{flex:1;overflow-y:auto;padding:16px;background:#f9fafb;display:flex;flex-direction:column;gap:12px}
+.utk-ai-message{max-width:88%;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;white-space:pre-line}
+.utk-ai-message.bot{align-self:flex-start;background:#fff;border:1px solid #e5e7eb;color:#374151;border-bottom-left-radius:4px}
+.utk-ai-message.user{align-self:flex-end;background:#ff8200;color:#fff;border-bottom-right-radius:4px}
+.utk-ai-suggestions{padding:0 16px 10px;background:#f9fafb;display:flex;gap:7px;flex-wrap:wrap}
+.utk-ai-chip{border:1px solid #fed7aa;background:#fff;color:#a64b00;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:600;cursor:pointer}
+.utk-ai-chip:hover{background:#fff3e6}
+.utk-ai-form{display:flex;gap:8px;padding:12px;border-top:1px solid #e5e7eb;background:#fff}
+.utk-ai-input{flex:1;min-width:0;border:1px solid #d1d5db;border-radius:9px;padding:10px 11px;font:13px Inter,system-ui,sans-serif;outline:none}
+.utk-ai-input:focus{border-color:#ff8200;box-shadow:0 0 0 3px rgba(255,130,0,.12)}
+.utk-ai-send{border:0;border-radius:9px;background:#ff8200;color:#fff;font:700 12px Inter,system-ui,sans-serif;padding:0 13px;cursor:pointer}
+.utk-ai-disclaimer{padding:0 14px 11px;background:#fff;color:#6b7280;font-size:10px;line-height:1.35}
+@media(max-width:560px){.utk-ai-launcher{right:16px;bottom:16px}.utk-ai-panel{right:16px;bottom:76px}.utk-ai-launcher .utk-ai-label{display:none}}
+
+
+
+/* TDX dropdown navigation */
+.tab-dropdown{position:relative;display:inline-flex;align-items:stretch;}
+.tab-dropdown > .tab-btn{border-radius:0;}
+.tab-dropdown summary{list-style:none;}
+.tab-dropdown summary::-webkit-details-marker{display:none;}
+.tab-dropdown-menu{position:absolute;z-index:30;top:calc(100% + 8px);left:0;min-width:235px;padding:7px;background:#fff;border:1px solid var(--grey-200);border-radius:10px;box-shadow:0 14px 30px rgba(31,41,55,.15);}
+.tab-dropdown-menu button{display:block;width:100%;padding:9px 10px;text-align:left;background:transparent;border:0;border-radius:7px;color:var(--grey-700);font:600 12px Inter,system-ui,sans-serif;cursor:pointer;}
+.tab-dropdown-menu button:hover{background:var(--orange-lt);color:var(--orange-dk);}
+.def-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+@media(max-width:760px){.def-grid{grid-template-columns:1fr}.tab-dropdown-menu{left:auto;right:0;}}
+
+/* LOW-FRICTION WORKSPACE REDESIGN — content retained, interface simplified */
+:root{--ink:#17213A;--ink-soft:#334155;--canvas:#F5F7FB;--surface:#FFF;--line:#E7ECF3;--focus:#FF8200;}
+body{background:var(--canvas);color:var(--ink);font-size:14px;}
+.top-header{height:72px;border-bottom:1px solid var(--line);box-shadow:0 2px 14px rgba(15,23,42,.06);padding:0 30px;}
+.header-icon{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#FF8200,#E96F00);box-shadow:0 8px 18px rgba(255,130,0,.22);}
+.header-title{font-size:15px;letter-spacing:-.15px;color:var(--ink)}.header-sub{font-size:11px;color:#64748B}.header-badge{background:#FFF7ED;border-color:#FED7AA;color:#9A4D00}
+.search-wrap{max-width:520px}.search-field{height:40px;border-radius:12px;background:#F8FAFC;border-color:#E2E8F0}.search-field:focus-within{box-shadow:0 0 0 4px rgba(255,130,0,.12)}
+.hdr-btn{border-radius:10px;padding:8px 13px}.hdr-btn-primary{background:var(--ink);box-shadow:0 5px 12px rgba(23,33,58,.15)}.hdr-btn-primary:hover{background:#29395F}
+/* Grouped left navigation: fewer visual choices and clearer task clusters. */
+.tab-bar-wrap{position:fixed;left:0;top:72px;bottom:0;width:252px;z-index:100;background:#FFF;border-right:1px solid var(--line);border-bottom:0;box-shadow:4px 0 18px rgba(15,23,42,.035);overflow-y:auto}
+.tab-bar{display:flex;flex-direction:column;align-items:stretch;padding:20px 12px 28px;overflow:visible}
+.nav-section-label{padding:16px 12px 7px;font-size:10px;font-weight:800;letter-spacing:.1em;color:#94A3B8;text-transform:uppercase}.nav-section-label:first-child{padding-top:0}
+.tab-btn,.tab-dropdown>.tab-btn{width:100%;min-height:40px;margin:0;border:0;border-left:3px solid transparent;border-radius:9px;padding:9px 12px;justify-content:flex-start;color:#52627A;font-size:12.5px;font-weight:650}
+.tab-btn:hover,.tab-dropdown>.tab-btn:hover{background:#F6F8FC;color:var(--ink)}.tab-btn.active,.tab-dropdown>.tab-btn.active{background:#FFF4E9;color:#A74F00;border-left-color:var(--focus);font-weight:750}
+.tab-dropdown{display:block;width:100%}.tab-dropdown-menu{position:static;min-width:0;margin:4px 0 0 14px;padding:5px;box-shadow:none;border:0;border-left:1px solid #E2E8F0;border-radius:0}.tab-dropdown-menu button{font-size:12px;padding:8px 10px;color:#64748B}.tab-dropdown-menu button:hover{background:#FFF4E9;color:#A74F00}.tab-wip{margin-left:auto;background:#FFF7ED;border-color:#FED7AA;color:#9A4D00}
+.main{max-width:1400px;margin:0 28px 0 280px;padding:34px 28px 72px}.tab-panel{max-width:1120px}.page-hdr{margin-bottom:26px}.page-tag{border:0;background:#FFF4E9;color:#A74F00;padding:4px 10px}.page-title{font-size:27px;letter-spacing:-.6px;color:var(--ink)}.page-desc{font-size:13.5px;color:#64748B;max-width:760px}
+.card{border-color:var(--line);border-radius:14px;box-shadow:0 2px 8px rgba(15,23,42,.035);padding:20px}.card:hover{border-color:#D5DDE9}.card-title{color:var(--ink)}.grid-2,.grid-3,.grid-4{gap:14px}
+.stat-box{border-color:var(--line);border-top:0;border-radius:14px;text-align:left;padding:18px;box-shadow:0 2px 8px rgba(15,23,42,.035)}.stat-val{font-size:27px;color:var(--ink)}.stat-label{color:#64748B;font-weight:600}.alert{border-radius:12px}.link-list li{border-color:var(--line);border-left-color:var(--focus);background:#FBFCFE}.link-list li:hover{background:#FFF9F4}
+@media(max-width:980px){.tab-bar-wrap{position:sticky;top:72px;width:auto;height:auto;left:auto;bottom:auto;border-right:0;border-bottom:1px solid var(--line);overflow:visible}.tab-bar{flex-direction:row;align-items:center;padding:0 16px;overflow-x:auto}.nav-section-label{display:none}.tab-btn,.tab-dropdown>.tab-btn{width:auto;min-height:auto;border-left:0;border-bottom:3px solid transparent;border-radius:0;padding:13px 14px}.tab-btn.active,.tab-dropdown>.tab-btn.active{border-left:0;border-bottom-color:var(--focus);background:transparent}.tab-dropdown{display:inline-flex;width:auto}.tab-dropdown-menu{position:absolute;margin:0;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 30px rgba(15,23,42,.15)}.main{margin:0 auto;max-width:1200px;padding:28px 22px 68px}}
+@media(max-width:680px){.top-header{height:62px;padding:0 16px}.header-title{font-size:13px}.header-badge,.header-actions{display:none}.search-wrap{max-width:none}.header-brand{min-width:0}.header-sub{display:none}.tab-bar-wrap{top:62px}.main{padding:23px 16px 68px}.page-title{font-size:23px}}
+
 </style>
 </head>
 <body>
-
 <!-- HEADER -->
 <header class="top-header">
-  <div class="header-brand">
-    <div class="header-icon">🛡</div>
-    <div>
-      <div class="header-title">UT Cybersecurity GRC Analyst Guide</div>
-      <div class="header-sub">Governance, Risk & Compliance — Operations Field Reference</div>
-    </div>
-    <span class="header-badge">SOP v2025</span>
-  </div>
-  <div class="header-actions">
-    <button class="hdr-btn hdr-btn-outline" onclick="window.print()">🖨 Print</button>
-    <button class="hdr-btn hdr-btn-primary" onclick="switchTab('tools')">🧮 Tier Calculator</button>
-  </div>
+<div class="header-brand">
+<div class="header-icon">🛡</div>
+<div>
+<div class="header-title">UT Cybersecurity GRC Analyst Guide</div>
+<div class="header-sub">Governance, Risk &amp; Compliance — Operations Field Reference</div>
+</div>
+<span class="header-badge">SOP v2025</span>
+</div>
+<!-- GLOBAL SEARCH -->
+<div class="search-wrap">
+<div class="search-field">
+<span class="s-ico">🔍</span>
+<input autocomplete="off" id="search-input" placeholder="Search the entire guide — statuses, SLAs, UpGuard steps, routing…" spellcheck="false" type="text"/>
+<button class="search-clear" id="search-clear" title="Clear (Esc)">✕</button>
+<span class="search-kbd">/</span>
+</div>
+<div class="search-results" id="search-results"></div>
+</div>
+<div class="header-actions">
+<button class="hdr-btn hdr-btn-primary" onclick="switchTab('tools')">🧮 Tier Calculator</button>
+</div>
 </header>
-
 <!-- TAB BAR -->
 <div class="tab-bar-wrap">
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('overview')" id="tab-overview">📋 Overview</button>
-    <button class="tab-btn" onclick="switchTab('intake')" id="tab-intake">📥 Queue Intake</button>
-    <button class="tab-btn" onclick="switchTab('triage')" id="tab-triage">⚡ Triage Workflow</button>
-    <button class="tab-btn" onclick="switchTab('status')" id="tab-status">📊 Status & SLA</button>
-    <button class="tab-btn" onclick="switchTab('comms')" id="tab-comms">💬 Communication</button>
-    <button class="tab-btn" onclick="switchTab('risk')" id="tab-risk">🔍 Risk Assessment</button>
-    <button class="tab-btn" onclick="switchTab('upguard')" id="tab-upguard">🛡 UpGuard SOP</button>
-    <button class="tab-btn" onclick="switchTab('integrations')" id="tab-integrations">🔗 Integrations</button>
-    <button class="tab-btn" onclick="switchTab('approval')" id="tab-approval">✅ Approval/Denial</button>
-    <button class="tab-btn" onclick="switchTab('timeout')" id="tab-timeout">⏱ Timeouts</button>
-    <button class="tab-btn" onclick="switchTab('templates')" id="tab-templates">📧 Email Templates</button>
-    <button class="tab-btn" onclick="switchTab('personnel')" id="tab-personnel">👥 Personnel</button>
-    <button class="tab-btn" onclick="switchTab('qa')" id="tab-qa">✔ QA Checklist</button>
-    <button class="tab-btn" onclick="switchTab('tools')" id="tab-tools">🧮 Tools</button>
-  </div>
+<div class="tab-bar"><div class="nav-section-label">WORKSPACE</div><button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">📋 Overview</button><details class="tab-dropdown">
+<summary class="tab-btn" id="tab-tdx">⚡ TDX <span style="font-size:10px;">▾</span></summary>
+<div class="tab-dropdown-menu">
+<button onclick="switchTab('triage'); this.closest('details').removeAttribute('open')">Ticket Process</button>
+<button onclick="switchTab('status'); this.closest('details').removeAttribute('open')">Status &amp; Time Tracking</button>
+<button onclick="switchTab('timeout'); this.closest('details').removeAttribute('open')">Timeouts &amp; Stalled Tickets</button>
 </div>
-
+</details><button class="tab-btn" id="tab-comms" onclick="switchTab('comms')">💬 Communication</button><div class="nav-section-label">REFERENCE</div><button class="tab-btn" id="tab-definitions" onclick="switchTab('definitions')">📚 Definitions</button><button class="tab-btn" id="tab-upguard" onclick="switchTab('upguard')">🛡 UpGuard SOP</button><div class="nav-section-label">WORKFLOW</div><button class="tab-btn" id="tab-integrations" onclick="switchTab('integrations')">🔗 Integrations <span class="tab-wip">Work in Progress</span></button><button class="tab-btn" id="tab-qa" onclick="switchTab('qa')">✔ QA Checklist</button><button class="tab-btn" id="tab-approval" onclick="switchTab('approval')">✅ Approval / Denial</button></div>
+</div>
 <div class="main">
-
 <!-- ============================================================ OVERVIEW -->
 <div class="tab-panel active" id="panel-overview">
-  <div class="page-hdr">
-    <div class="page-tag">📋 Section 1</div>
-    <div class="page-title">Purpose & Administrative Scope</div>
-    <div class="page-desc">TDX Ticket Triage & Technical Risk Assessment Master SOP — University of Tennessee Cybersecurity GRC</div>
-  </div>
-
-  <div class="grid-4">
-    <div class="stat-box"><div class="stat-val">14</div><div class="stat-label">Day Resolve SLA</div></div>
-    <div class="stat-box"><div class="stat-val">600+</div><div class="stat-label">UpGuard Pass Score</div></div>
-    <div class="stat-box"><div class="stat-val">90%</div><div class="stat-label">Min Coverage Required</div></div>
-    <div class="stat-box"><div class="stat-val">3 yr</div><div class="stat-label">Evidence Freshness Max</div></div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">🎯</span> Purpose</div>
-      <ul class="styled">
-        <li>Standardize queue management across TDX</li>
-        <li>Map status lifecycle and time-tracking states</li>
-        <li>Govern template communications to requesters</li>
-        <li>Manage UpGuard vendor risk assessments</li>
-        <li>Oversee integration reviews and approval hierarchy</li>
-        <li>Enforce consistent time tracking on every ticket</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📐</span> Scope</div>
-      <ul class="styled">
-        <li>All GRC analysts and triage specialists</li>
-        <li>IT security personnel conducting risk reviews</li>
-        <li>All operations within TeamDynamix (TDX)</li>
-        <li>All new and renewing vendors and service providers</li>
-        <li>Security analysts, risk managers, and vendor relationship managers utilizing UpGuard</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title"><span class="ico">📧</span> Primary Contact</div>
-      <p style="font-size:13px;color:var(--grey-600);">Submit requests to:</p>
-      <p style="font-weight:700;color:var(--orange);margin-top:6px;">GRC@Tennessee.edu</p>
-      <p style="font-size:12px;color:var(--grey-500);margin-top:4px;">Forward to GRCSupport@Tennessee.edu for automatic TDX ticket creation.</p>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🔒</span> Responsibilities</div>
-      <ul class="styled">
-        <li><strong>Analyst:</strong> Create & manage vendor profiles</li>
-        <li><strong>Admin:</strong> Ensure UT security policy compliance</li>
-        <li><strong>Risk Managers:</strong> Oversee remediation progress</li>
-        <li><strong>Asset Owners:</strong> Communicate with vendors</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📄</span> Related Documents</div>
-      <ul class="styled">
-        <li>GRC Analyst Guide</li>
-        <li>GRC TDx Triage Guide</li>
-        <li>UT IT Policy IT1516 — Service Provider Management</li>
-        <li>UpGuard Vendor Risk Management SOP</li>
-      </ul>
-    </div>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">📋 Section 1</div>
+<div class="page-title">Purpose &amp; Administrative Scope</div>
+<div class="page-desc">TDX Ticket Triage &amp; Technical Risk Assessment Master SOP — University of Tennessee Cybersecurity GRC</div>
 </div>
-
-<!-- ============================================================ QUEUE INTAKE -->
-<div class="tab-panel" id="panel-intake">
-  <div class="page-hdr">
-    <div class="page-tag">📥 Section 2</div>
-    <div class="page-title">Queue Ingestion & Intake Methods</div>
-    <div class="page-desc">Four pathways for ticket creation and intake — monitor all daily.</div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head open" onclick="toggleAcc(this)">
-      <div class="acc-title">📧 2.1 — Email Ingestion (GRC@Tennessee.edu)</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body open">
-      <ul class="styled">
-        <li><strong>Forwarding Protocol:</strong> Forward incoming requests to <span class="inline-code">GRCSupport@Tennessee.edu</span> to trigger automatic TDX ticket creation.</li>
-        <li><strong>Missing Attachments:</strong> If documentation is omitted in the original email, make an explicit note to request files immediately after ticket generation.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">📋 2.2 — Direct Review Form Ingestion</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <p style="font-size:13px;color:var(--grey-700);margin-bottom:10px;">Analysts must actively monitor the TDX dashboard report <strong>"Open ALL GRC Tickets"</strong> daily:</p>
-      <ul class="styled">
-        <li>Identify items where <span class="inline-code">STATUS = New</span> OR <span class="inline-code">PRIM RESP = Blank / Unassigned</span></li>
-        <li>Click the <strong>Ticket ID</strong> in the left column to open ticket details and evaluate form fields</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🔄 2.3 — Reassigned TDX Tickets Protocol</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <p style="font-size:13px;color:var(--grey-700);margin-bottom:10px;">When external TDX groups reassign tickets without required intake data:</p>
-      <ol class="styled">
-        <li>Advise the requester to submit a formal request via the <strong>Risk Review intake portal</strong></li>
-        <li>Close the current ticket: Click <span class="inline-code">Actions &gt; Update</span>, set <span class="inline-code">Status = Cancelled</span>, and apply template: <span class="inline-code">GRC &gt; New Technology Risk Review Intake Process New Ticket Request</span></li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🔀 2.4 — Requester Corrections & Duplicate Merging</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="grid-2">
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;">Requester Field Updates</p>
-          <p style="font-size:13px;color:var(--grey-700);">If submitted on behalf of another user (e.g., HelpDesk or Contracts), click <strong>Edit</strong>, update the <strong>Requester</strong> field to the end user, and click <strong>Save</strong>.</p>
-        </div>
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;">Merging Duplicate Tickets</p>
-          <p style="font-size:13px;color:var(--grey-700);">Open the ticket to merge, click <span class="inline-code">Actions &gt; Merge Into</span>, copy/paste the primary Ticket ID into the <strong>To Ticket</strong> field, and save.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="grid-4">
+<div class="stat-box"><div class="stat-val">14</div><div class="stat-label">Day Resolve SLA</div></div>
+<div class="stat-box"><div class="stat-val">600+</div><div class="stat-label">UpGuard Pass Score</div></div>
+<div class="stat-box"><div class="stat-val">90%</div><div class="stat-label">Min Coverage Required</div></div>
+<div class="stat-box"><div class="stat-val">3 yr</div><div class="stat-label">Evidence Freshness Max</div></div>
 </div>
-
+<div class="grid-2">
+<div class="card">
+<div class="card-title"><span class="ico">🎯</span> Purpose</div>
+<ul class="styled">
+<li>Standardize queue management across TDX</li>
+<li>Map status lifecycle and time-tracking states</li>
+<li>Govern template communications to requesters</li>
+<li>Manage UpGuard vendor risk assessments</li>
+<li>Oversee integration reviews and approval hierarchy</li>
+<li>Enforce consistent time tracking on every ticket</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">📐</span> Scope</div>
+<ul class="styled">
+<li>All GRC analysts and triage specialists</li>
+<li>IT security personnel conducting risk reviews</li>
+<li>All operations within TeamDynamix (TDX)</li>
+<li>All new and renewing vendors and service providers</li>
+<li>Security analysts, risk managers, and vendor relationship managers utilizing UpGuard</li>
+</ul>
+</div>
+</div>
+<div class="grid-2">
+<div class="card">
+<div class="card-title"><span class="ico">🔗</span> Important Links</div>
+<ul class="link-list">
+<li>
+<a href="https://utk.teamdynamix.com/TDClient/2277/OIT-Portal/Requests/Service/53669/Data-and-Technology-Risk-Review" rel="noopener" target="_blank">Submit a DTR Ticket</a>
+<span class="link-note">Data &amp; Technology Risk Review request form</span>
+</li>
+<li>
+<a href="https://utk.teamdynamix.com/" rel="noopener" target="_blank">TeamDynamix (TDX)</a>
+<span class="link-note">Access and work the ticket queue</span>
+</li>
+<li>
+<a href="https://cyber-risk.upguard.com/" rel="noopener" target="_blank">Cyber Risk Posture Management (CRPM)</a>
+<span class="link-note">UpGuard platform for vendor risk assessments</span>
+</li>
+<li>
+<a href="https://oit.utk.edu/ai/aihub/" rel="noopener" target="_blank">UTK AI Hub</a>
+<span class="link-note">Approved AI tools, guidance, and review requirements</span>
+</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">📄</span> Related Documents</div>
+<ul class="styled">
+<li>GRC Analyst Guide</li>
+<li>GRC TDx Triage Guide</li>
+<li>UT IT Policy IT1516 — Service Provider Management</li>
+<li>UpGuard Vendor Risk Management SOP</li>
+</ul>
+</div>
+</div>
+</div>
 <!-- ============================================================ TRIAGE WORKFLOW -->
 <div class="tab-panel" id="panel-triage">
-  <div class="page-hdr">
-    <div class="page-tag">⚡ Section 3</div>
-    <div class="page-title">6-Step Quick Triage Workflow</div>
-    <div class="page-desc">Visual sequence for handling incoming tickets from initial review through final closure.</div>
-  </div>
-
-  <div class="step-row">
-    <div class="step-item">
-      <div class="step-num">1</div>
-      <div class="step-label">Step 1</div>
-      <div class="step-text">Access TDX & Open Ticket</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">2</div>
-      <div class="step-label">Step 2</div>
-      <div class="step-text">Set Open & Send Analyst Template</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">3</div>
-      <div class="step-label">Step 3</div>
-      <div class="step-text">Request Intake & Security Docs</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">4</div>
-      <div class="step-label">Step 4</div>
-      <div class="step-text">Update Status & Start Time Clock</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">5</div>
-      <div class="step-label">Step 5</div>
-      <div class="step-text">2-Week Lifecycle / Approval Review</div>
-    </div>
-    <div class="step-item">
-      <div class="step-num">6</div>
-      <div class="step-label">Step 6</div>
-      <div class="step-text">Execute Approval / Rejection & Log Time</div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">1️⃣</span> Step 1 — Access TDX & Open Ticket</div>
-      <ul class="styled">
-        <li>Log in to TDX with your UT credentials</li>
-        <li>Navigate to the <strong>"Open ALL GRC Tickets"</strong> dashboard report</li>
-        <li>Identify tickets with <span class="inline-code">STATUS = New</span> or <span class="inline-code">PRIM RESP = Blank</span></li>
-        <li>Click Ticket ID to open and review form fields</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">2️⃣</span> Step 2 — Set Open & Send Analyst Template</div>
-      <ul class="styled">
-        <li>Assign yourself as Primary Responsible</li>
-        <li>Change ticket status to <span class="inline-code">Open</span></li>
-        <li>Apply template: <span class="inline-code">GRC &gt; Analyst Assigned</span></li>
-        <li>This stops the <strong>Respond By SLA</strong> clock</li>
-        <li>Start your Time Tracking — Time Started</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">3️⃣</span> Step 3 — Request Intake & Security Docs</div>
-      <ul class="styled">
-        <li>Review all form fields for completeness</li>
-        <li>If missing intake data → apply <span class="inline-code">GRC &gt; New Tech Intake</span> template</li>
-        <li>Request security docs: SOC 2, ISO 27001, HITRUST, or HECVAT</li>
-        <li>Set status to <span class="inline-code">Awaiting Response</span> and pause time</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">4️⃣</span> Step 4 — Update Status & Start Time Clock</div>
-      <ul class="styled">
-        <li>Once requester responds → set status to <span class="inline-code">In Progress</span></li>
-        <li>Resume time tracking — Time Running</li>
-        <li>Begin UpGuard vendor lookup and evidence review</li>
-        <li>Classify data types and deployment model</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">5️⃣</span> Step 5 — 2-Week Lifecycle / Approval Review</div>
-      <ul class="styled">
-        <li><strong>Resolve By SLA</strong> = 14 calendar days from ticket creation</li>
-        <li>Conduct full UpGuard risk assessment</li>
-        <li>Review all evidence for freshness (&lt; 3 years)</li>
-        <li>If score &gt; 600 → proceed to approval</li>
-        <li>If score &lt; 600 → treat/adjust risks and document</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">6️⃣</span> Step 6 — Execute Approval / Rejection & Log Time</div>
-      <ul class="styled">
-        <li>Click <strong>Approve Ticket</strong> or <strong>Reject Ticket</strong> in Current Activities panel</li>
-        <li><strong>NEVER</strong> set Status = Resolved manually</li>
-        <li>Log all time entries — zero exceptions</li>
-        <li>Document final findings in the TDX feed</li>
-        <li>Time Tracking → Stopped</li>
-      </ul>
-    </div>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">⚡ Section 2</div>
+<div class="page-title">TDX Ticket Process</div>
+<div class="page-desc">Visual sequence for handling incoming tickets from initial review through final closure.</div>
 </div>
-
+<div class="step-row">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-label">Step 1</div>
+<div class="step-text">Access TDX &amp; Open Ticket</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-label">Step 2</div>
+<div class="step-text">Set Open &amp; Send Analyst Template</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-label">Step 3</div>
+<div class="step-text">Request Intake &amp; Security Docs</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-label">Step 4</div>
+<div class="step-text">Update Status &amp; Start Time Clock</div>
+</div>
+<div class="step-item">
+<div class="step-num">5</div>
+<div class="step-label">Step 5</div>
+<div class="step-text">2-Week Lifecycle / Approval Review</div>
+</div>
+<div class="step-item">
+<div class="step-num">6</div>
+<div class="step-label">Step 6</div>
+<div class="step-text">Execute Approval / Rejection &amp; Log Time</div>
+</div>
+</div>
+<div class="grid-2">
+<div class="card">
+<div class="card-title"><span class="ico">1️⃣</span> Step 1 — Access TDX &amp; Open Ticket</div>
+<ul class="styled">
+<li>Log in to TDX with your UT credentials</li>
+<li>Navigate to the <strong>"Open ALL GRC Tickets"</strong> dashboard report</li>
+<li>Identify tickets with <span class="inline-code">STATUS = New</span> or <span class="inline-code">PRIM RESP = Blank</span></li>
+<li>Click Ticket ID to open and review form fields</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">2️⃣</span> Step 2 — Set Open &amp; Send Analyst Template</div>
+<ul class="styled">
+<li>Assign yourself as Primary Responsible</li>
+<li>Change ticket status to <span class="inline-code">Open</span></li>
+<li>Apply template: <span class="inline-code">GRC &gt; Analyst Assigned</span></li>
+<li>This stops the <strong>Respond By SLA</strong> clock</li>
+<li>Start your Time Tracking — Time Started</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">3️⃣</span> Step 3 — Request Intake &amp; Security Docs</div>
+<ul class="styled">
+<li>Review all form fields for completeness</li>
+<li>If missing intake data → apply <span class="inline-code">GRC &gt; New Tech Intake</span> template</li>
+<li>Request security docs: SOC 2, ISO 27001, HITRUST, or HECVAT</li>
+<li>Set status to <span class="inline-code">Awaiting Response</span> and pause time</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">4️⃣</span> Step 4 — Update Status &amp; Start Time Clock</div>
+<ul class="styled">
+<li>Once requester responds → set status to <span class="inline-code">In Progress</span></li>
+<li>Resume time tracking — Time Running</li>
+<li>Begin UpGuard vendor lookup and evidence review</li>
+<li>Classify data types and deployment model</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">5️⃣</span> Step 5 — 2-Week Lifecycle / Approval Review</div>
+<ul class="styled">
+<li><strong>Resolve By SLA</strong> = 14 calendar days from ticket creation</li>
+<li>Conduct full UpGuard risk assessment</li>
+<li>Review all evidence for freshness (&lt; 3 years)</li>
+<li>If score &gt; 600 → proceed to approval</li>
+<li>If score &lt; 600 → treat/adjust risks and document</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">6️⃣</span> Step 6 — Execute Approval / Rejection &amp; Log Time</div>
+<ul class="styled">
+<li>Click <strong>Approve Ticket</strong> or <strong>Reject Ticket</strong> in Current Activities panel</li>
+<li><strong>NEVER</strong> set Status = Resolved manually</li>
+<li>Log all time entries — zero exceptions</li>
+<li>Document final findings in the TDX feed</li>
+<li>Time Tracking → Stopped</li>
+</ul>
+</div>
+</div>
+</div>
 <!-- ============================================================ STATUS & SLA -->
 <div class="tab-panel" id="panel-status">
-  <div class="page-hdr">
-    <div class="page-tag">📊 Section 4</div>
-    <div class="page-title">Status, Time-Tracking & SLA Matrix</div>
-    <div class="page-desc">Every ticket status change dictates a corresponding time-tracking state. Status changes must be recorded immediately.</div>
-  </div>
-
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title"><span class="ico">📊</span> Ticket Status & Time Tracking Matrix</div>
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>Ticket Status</th>
-          <th>Operational Definition & Workflow Condition</th>
-          <th>Time Tracking</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-blue">New</span></td>
-          <td>Ticket is unassigned in the queue; Respond By SLA clock is actively ticking.</td>
-          <td><span class="badge badge-grey">Time Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-orange">Open</span></td>
-          <td>Assigned to an analyst; initial triage complete, work preparation underway.</td>
-          <td><span class="badge badge-amber">Time Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-amber">In Progress</span></td>
-          <td>Requester responded; analyst is actively conducting risk analysis or review.</td>
-          <td><span class="badge badge-orange">Time Running</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-grey">Awaiting Response</span></td>
-          <td>Waiting on requester or vendor to provide required security documentation.</td>
-          <td><span class="badge badge-grey">Time Paused</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-grey">On Hold</span></td>
-          <td>Paused for authorization, committee review, or set scheduled future date.</td>
-          <td><span class="badge badge-grey">Time Paused</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-blue">Solution Proposed</span></td>
-          <td>Alternative proposal or risk mitigation option presented to requester.</td>
-          <td><span class="badge badge-grey">Time Paused</span></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-green">Resolved</span></td>
-          <td>Risk assessment completed and approved/rejected via Current Activities.</td>
-          <td><span class="badge badge-green">Time Stopped</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">⏱</span> SLA Standards</div>
-      <ul class="styled">
-        <li><strong>Respond By SLA:</strong> Stopped when an analyst assigns responsibility and sends the <em>Analyst Assigned</em> template to the requester.</li>
-        <li><strong>Resolve By SLA:</strong> Auto-configured for exactly <strong>14 calendar days (2 weeks)</strong> from initial ticket arrival.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📑</span> Template Quick Reference</div>
-      <table class="tbl">
-        <thead><tr><th>Template</th><th>When to Apply</th></tr></thead>
-        <tbody>
-          <tr><td><span class="inline-code">GRC &gt; Analyst Assigned</span></td><td>Upon taking responsibility — stops Respond By SLA</td></tr>
-          <tr><td><span class="inline-code">GRC &gt; New Tech Intake</span></td><td>Ticket missing required intake form data</td></tr>
-          <tr><td><span class="inline-code">GRC &gt; Potential Approval - Security Docs</span></td><td>Request SOC 2, ISO 27001, HITRUST, or HECVAT</td></tr>
-          <tr><td><span class="inline-code">GRC &gt; Potential Approval - PCI Docs</span></td><td>Credit card or payment processing functionality</td></tr>
-          <tr><td><span class="inline-code">GRC &gt; Stalled Ticket</span></td><td>At 2-week mark with no requester response</td></tr>
-          <tr><td><span class="inline-code">GRC &gt; Ticket Closure</span></td><td>Closing due to missing docs or cancelled project</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">📊 Section 3</div>
+<div class="page-title">Status, Time-Tracking &amp; SLA Matrix</div>
+<div class="page-desc">Every ticket status change dictates a corresponding time-tracking state. Status changes must be recorded immediately.</div>
 </div>
-
+<div class="card" style="margin-bottom:16px;">
+<div class="card-title"><span class="ico">📊</span> Ticket Status &amp; Time Tracking Matrix</div>
+<table class="tbl">
+<thead>
+<tr>
+<th>Ticket Status</th>
+<th>Operational Definition &amp; Workflow Condition</th>
+<th>Time Tracking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="badge badge-blue">New</span></td>
+<td>Ticket is unassigned in the queue; Respond By SLA clock is actively ticking.</td>
+<td><span class="badge badge-amber">Time Started</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-orange">Open</span></td>
+<td>Assigned to an analyst; initial triage complete, work preparation underway.</td>
+<td><span class="badge badge-orange">Time Running</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-amber">In Progress</span></td>
+<td>Requester responded; analyst is actively conducting risk analysis or review.</td>
+<td><span class="badge badge-orange">Time Running</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-grey">Awaiting Response</span></td>
+<td>Waiting on requester or vendor to provide required security documentation.</td>
+<td><span class="badge badge-grey">Time Paused</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-grey">On Hold</span></td>
+<td>Paused for authorization, committee review, or set scheduled future date.</td>
+<td><span class="badge badge-grey">Time Paused</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-blue">Solution Proposed</span></td>
+<td>Alternative proposal or risk mitigation option presented to requester.</td>
+<td><span class="badge badge-grey">Time Paused</span></td>
+</tr>
+<tr>
+<td><span class="badge badge-green">Resolved</span></td>
+<td>Risk assessment completed and approved/rejected via Current Activities.</td>
+<td><span class="badge badge-green">Time Stopped</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid-2">
+<div class="card">
+<div class="card-title"><span class="ico">⏱</span> SLA Standards</div>
+<ul class="styled">
+<li><strong>Respond By SLA:</strong> Stopped when an analyst assigns responsibility and sends the <em>Analyst Assigned</em> template to the requester.</li>
+<li><strong>Resolve By SLA:</strong> Auto-configured for exactly <strong>14 calendar days (2 weeks)</strong> from initial ticket arrival.</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">📑</span> Template Quick Reference</div>
+<table class="tbl">
+<thead><tr><th>Template</th><th>When to Apply</th></tr></thead>
+<tbody>
+<tr><td><span class="inline-code">GRC &gt; Analyst Assigned</span></td><td>Upon taking responsibility — stops Respond By SLA</td></tr>
+<tr><td><span class="inline-code">GRC &gt; New Tech Intake</span></td><td>Ticket missing required intake form data</td></tr>
+<tr><td><span class="inline-code">GRC &gt; Potential Approval - Security Docs</span></td><td>Request SOC 2, ISO 27001, HITRUST, or HECVAT</td></tr>
+<tr><td><span class="inline-code">GRC &gt; Potential Approval - PCI Docs</span></td><td>Credit card or payment processing functionality</td></tr>
+<tr><td><span class="inline-code">GRC &gt; Stalled Ticket</span></td><td>At 2-week mark with no requester response</td></tr>
+<tr><td><span class="inline-code">GRC &gt; Ticket Closure</span></td><td>Closing due to missing docs or cancelled project</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 <!-- ============================================================ COMMUNICATION -->
 <div class="tab-panel" id="panel-comms">
-  <div class="page-hdr">
-    <div class="page-tag">💬 Section 6</div>
-    <div class="page-title">Communication Etiquette & Feed Management</div>
-    <div class="page-desc">Ticket communications default to private. Ensure proper visibility settings before sending every comment.</div>
-  </div>
-
-  <div class="alert alert-red">
-    <div class="alert-title">🚨 Public Visibility Alert Warning</div>
+<div class="page-hdr">
+<div class="page-tag">💬 Section 4</div>
+<div class="page-title">Communication Etiquette &amp; Feed Management</div>
+<div class="page-desc">Communicate clearly, maintain proper ticket visibility, coordinate vendor meetings, and document handoffs.</div>
+</div>
+<div class="alert alert-red">
+<div class="alert-title">🚨 Public Visibility Alert Warning</div>
     If <em>Make comments private</em> remains checked while an external contact is selected in <strong>Notify</strong>, a red warning banner ("Mark Public") will display. Click <strong>Mark Public</strong> to grant visibility before saving.
   </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">👁</span> 6.1 — Public vs. Private Comment Rules</div>
-      <ul class="styled">
-        <li><strong>Messaging Requesters:</strong> Uncheck <em>Make comments private</em> to make comments visible to external requesters. Select the Requester in the Notify field.</li>
-        <li><strong>Internal Analyst Notes:</strong> Leave <em>Make comments private</em> checked to restrict notes to internal OIT users only.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🔽</span> 6.2 — Feed Filtering & Threaded Replies</div>
-      <ul class="styled">
-        <li><strong>Filtering:</strong> Filter ticket feeds using header tabs: All (1), Communications (2), Edits (3), Status Changes (4), and Comments (5)</li>
-        <li><strong>Top Feed Comments:</strong> Click the main <strong>Comment</strong> button to place notes at the top of the feed</li>
-        <li><strong>Threaded Replies:</strong> Click the small <strong>Comment</strong> hyperlink directly under a specific entry to nest responses under parent comments</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">📅</span> 6.3 — Communication Schedule & Quality Standards</div>
-    <div class="grid-3">
-      <div class="highlight-box">
-        <div class="highlight-box-title">🟢 In Progress Status</div>
-        <p style="font-size:13px;color:var(--grey-700);">Provide status updates every <strong>1 to 2 business days</strong>.</p>
-      </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">🟡 Awaiting Response Status</div>
-        <p style="font-size:13px;color:var(--grey-700);">Follow up every <strong>2 to 3 business days</strong>.</p>
-      </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">✅ Professionalism</div>
-        <p style="font-size:13px;color:var(--grey-700);">Maintain a clear, professional, and courteous tone in all feed entries.</p>
-      </div>
-    </div>
-  </div>
+<div class="grid-2">
+<div class="card">
+<div class="card-title"><span class="ico">👁</span> 6.1 — Public vs. Private Comment Rules</div>
+<ul class="styled">
+<li><strong>Messaging Requesters:</strong> Uncheck <em>Make comments private</em> to make comments visible to external requesters. Select the Requester in the Notify field.</li>
+<li><strong>Internal Analyst Notes:</strong> Leave <em>Make comments private</em> checked to restrict notes to internal OIT users only.</li>
+</ul>
 </div>
-
+<div class="card">
+<div class="card-title"><span class="ico">🔽</span> 6.2 — Feed Filtering &amp; Threaded Replies</div>
+<ul class="styled">
+<li><strong>Filtering:</strong> Filter ticket feeds using header tabs: All (1), Communications (2), Edits (3), Status Changes (4), and Comments (5)</li>
+<li><strong>Top Feed Comments:</strong> Click the main <strong>Comment</strong> button to place notes at the top of the feed</li>
+<li><strong>Threaded Replies:</strong> Click the small <strong>Comment</strong> hyperlink directly under a specific entry to nest responses under parent comments</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">📅</span> 6.3 — Communication Schedule &amp; Quality Standards</div>
+<div class="grid-3">
+<div class="highlight-box">
+<div class="highlight-box-title">🟢 In Progress Status</div>
+<p style="font-size:13px;color:var(--grey-700);">Provide status updates every <strong>1 to 2 business days</strong>.</p>
+</div>
+<div class="highlight-box">
+<div class="highlight-box-title">🟡 Awaiting Response Status</div>
+<p style="font-size:13px;color:var(--grey-700);">Follow up every <strong>2 to 3 business days</strong>.</p>
+</div>
+<div class="highlight-box">
+<div class="highlight-box-title">✅ Professionalism</div>
+<p style="font-size:13px;color:var(--grey-700);">Maintain a clear, professional, and courteous tone in all feed entries.</p>
+</div>
+</div>
+</div>
+<div class="grid-2" style="margin-top:16px;">
+<div class="card">
+<div class="card-title"><span class="ico">📞</span> Vendor Review Meetings</div>
+<ul class="styled">
+<li>Schedule a meeting when written documentation does not answer material security questions.</li>
+<li>Focus on data flow, hosting, access, incident response, backups, and remediation.</li>
+<li>Document attendees, decisions, action items, and deadlines in the TDX feed.</li>
+<li>Request written confirmation or supporting evidence for material controls discussed verbally.</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">📄</span> Contracts Review</div>
+<ul class="styled">
+<li>For a contracts review, assign the ticket to <strong>Stephen Brown, Dan Fast, or Brian Stubblefield</strong>.</li>
+<li>Document the reason for the handoff in a feed comment and notify the requester.</li>
+<li>Include the agreement, relevant vendor documentation, and any identified risk questions.</li>
+</ul>
+</div>
+</div>
+</div>
 <!-- ============================================================ RISK ASSESSMENT -->
-<div class="tab-panel" id="panel-risk">
-  <div class="page-hdr">
-    <div class="page-tag">🔍 Section 8</div>
-    <div class="page-title">Detailed Risk Assessment Procedures</div>
-    <div class="page-desc">Subsections 8.1–8.7 covering all risk analysis, handoffs, data classification, and deployment types.</div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">🔎</span> 8.1 — Risk Analysis Protocol</div>
-      <ul class="styled">
-        <li>Review ticket details, form entries, attachments, and data types</li>
-        <li>Evaluate deployment model, SSO integration, AI functionality, and criticality</li>
-        <li>Inspect UpGuard for existing evidence, vendor summary scores, and prior conditions</li>
-        <li>Document findings and risk decisions (Approval, Remediation, Acceptance) in TDX</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🤝</span> 8.2 — Technical Team Handoffs</div>
-      <ul class="styled">
-        <li><strong>Google Suite:</strong> Reassign ticket to <span class="inline-code">OIT_Platform Services</span></li>
-        <li><strong>Microsoft Integrations:</strong> Route to <strong>Jet Toomey</strong> for permission review</li>
-        <li><strong>Contracts Review:</strong> Assign to <strong>Stephen Brown, Dan Fast, or Brian Stubblefield</strong></li>
-        <li>Document all handoffs in feed comments and notify the requester</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🏷</span> 8.3 — Data Classification & Impact</div>
-      <ul class="styled">
-        <li>Classify data using actual elements (e.g., GDPR, FERPA, HIPAA, PCI)</li>
-        <li>Apply the highest applicable classification level</li>
-        <li>Verify stated business impact against outage effects</li>
-        <li>Request missing data details before advancing workflow</li>
-      </ul>
-      <hr class="section-divider">
-      <p style="font-size:12px;font-weight:700;color:var(--grey-600);margin-bottom:8px;">BUSINESS IMPACT LEVELS</p>
-      <table class="tbl">
-        <thead><tr><th>Level</th><th>Definition</th></tr></thead>
-        <tbody>
-          <tr><td><span class="badge badge-grey">Nominal</span></td><td>System unavailability &gt; 2 weeks = minimal impact</td></tr>
-          <tr><td><span class="badge badge-blue">Low</span></td><td>72 hours to 2 weeks = adverse effect</td></tr>
-          <tr><td><span class="badge badge-amber">High</span></td><td>72 hours or less = severe / catastrophic effect</td></tr>
-          <tr><td><span class="badge badge-red">Critical</span></td><td>Control system — life-threatening risk if subverted</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📋</span> 8.4 — Gap Questionnaires</div>
-      <ul class="styled">
-        <li>Trigger when evidence coverage is <strong>under 90%</strong> or missing</li>
-        <li>Assign a strict <strong>2-week (14 calendar day)</strong> due date</li>
-        <li>Request SOC 2 Type II, ISO 27001, HECVAT, or policy files</li>
-        <li>Upload and review vendor responses in UpGuard</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📞</span> 8.5 — Vendor Review Meetings</div>
-      <ul class="styled">
-        <li>Schedule when documentation leaves security questions unanswered</li>
-        <li>Focus on data flow, hosting, incident response, backups, and remediation</li>
-        <li>Log attendees, decisions, action items, and deadlines in TDX feed</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">📄</span> 8.6 — HECVAT & Assurance Reports</div>
-      <ul class="styled">
-        <li>Use HECVAT when third-party assurance reports are unavailable</li>
-        <li>Convert Excel HECVAT spreadsheets to PDF prior to UpGuard upload</li>
-        <li>Prioritize Critical and High risks first during evidence validation</li>
-      </ul>
-      <div class="alert alert-orange" style="margin-top:12px;margin-bottom:0;">
-        <div class="alert-title">📄 HECVAT → PDF Protocol</div>
-        Open HECVAT in Excel → File &gt; Save as Adobe PDF → Conversion Range = Entire Workbook → Conversion Options = Fit to paper width → Click 'Convert to PDF'
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">🏗</span> 8.7 — Premise & Deployment Classification</div>
-    <div class="grid-3">
-      <div class="highlight-box">
-        <div class="highlight-box-title">☁️ Vendor-Hosted (Cloud)</div>
-        <ul class="styled">
-          <li>Evaluate vendor data protections</li>
-          <li>Review SOC reports and backup frequency</li>
-          <li>Check subcontractor access</li>
-        </ul>
-      </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">🖥 Self-Hosted (On-Premises)</div>
-        <ul class="styled">
-          <li>Review internal server controls</li>
-          <li>Check patching schedules</li>
-          <li>Verify access restrictions</li>
-        </ul>
-      </div>
-      <div class="highlight-box">
-        <div class="highlight-box-title">🔀 Hybrid Deployment</div>
-        <ul class="styled">
-          <li>Verify cloud data protections</li>
-          <li>Review on-premises integration interfaces</li>
-          <li>Assess both environments independently</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ============================================================ UPGUARD SOP -->
+<!-- ============================================================ DEFINITIONS -->
+<div class="tab-panel" id="panel-definitions">
+<div class="page-hdr">
+<div class="page-tag">📚 Definitions</div>
+<div class="page-title">Data, Impact &amp; Deployment Definitions</div>
+<div class="page-desc">Use the actual data elements, outage effect, and technical deployment—not the product name alone—to classify a request.</div>
+</div>
+<div class="def-grid">
+<div class="card">
+<div class="card-title"><span class="ico">🏷</span> 8.3 — Data Classification &amp; Business Impact</div>
+<ul class="styled">
+<li>Classify data using the actual information stored, processed, or transmitted.</li>
+<li>Apply the highest applicable data classification.</li>
+<li>Confirm business impact based on the effect of an outage on UT as a whole.</li>
+<li>Request clarification when selections do not match the service description.</li>
+</ul>
+<hr class="section-divider"/>
+<table class="tbl"><thead><tr><th>Impact</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><span class="badge badge-grey">Nominal</span></td><td>More than two weeks unavailable with minimal or no effect.</td></tr>
+<tr><td><span class="badge badge-blue">Low</span></td><td>72 hours to two weeks unavailable with an adverse effect.</td></tr>
+<tr><td><span class="badge badge-amber">High</span></td><td>72 hours or less unavailable with severe University-wide disruption.</td></tr>
+<tr><td><span class="badge badge-red">Critical</span></td><td>Control-system failure or compromise could create life-safety risk.</td></tr>
+</tbody></table>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">🗂</span> Data Type Definitions</div>
+<table class="tbl"><thead><tr><th>Classification</th><th>Use when the service handles</th></tr></thead><tbody>
+<tr><td><span class="badge badge-green">Public</span></td><td>Public-facing information, public directory information, course information, or published materials.</td></tr>
+<tr><td><span class="badge badge-blue">Internal Use Only</span></td><td>Routine non-public operational information, internal communications, or soft PII not otherwise regulated.</td></tr>
+<tr><td><span class="badge badge-amber">Private</span></td><td>TNID, FERPA academic records, opted-out directory information, non-public IP, NDA-protected information, or sensitive operational details.</td></tr>
+<tr><td><span class="badge badge-red">Restricted</span></td><td>PII, PHI, PCI data, government IDs, financial accounts, biometrics, credentials, or sensitive identifiable research data.</td></tr>
+</tbody></table>
+<div class="alert alert-orange" style="margin-top:14px;margin-bottom:0;"><div class="alert-title">Use the highest applicable level</div>If a service handles multiple data types, classify it according to the most sensitive data type in scope.</div>
+</div>
+</div>
+<div class="card" style="margin-top:16px;">
+<div class="card-title"><span class="ico">🏗</span> 8.7 — Premise &amp; Deployment Classification</div>
+<div class="grid-3">
+<div class="highlight-box"><div class="highlight-box-title">☁️ Vendor-Hosted</div><p>Vendor-owned cloud or infrastructure hosts or manages the service. Review vendor data protections, hosting, backups, and subcontractors.</p></div>
+<div class="highlight-box"><div class="highlight-box-title">🖥 Self-Hosted</div><p>UT-owned data center or cloud hosts and manages the service. Review vendor support access, patching, updates, and UT controls.</p></div>
+<div class="highlight-box"><div class="highlight-box-title">🔀 Hybrid</div><p>UT and vendor-managed components are both involved. Identify the data flow and assess each environment.</p></div>
+</div>
+</div>
+</div>
 <div class="tab-panel" id="panel-upguard">
-  <div class="page-hdr">
-    <div class="page-tag">🛡 Section 7</div>
-    <div class="page-title">UpGuard Vendor Risk Management SOP</div>
-    <div class="page-desc">Full step-by-step process for creating, assessing, and managing vendors in UpGuard per UT policy IT1516.</div>
-  </div>
-
-  <div class="grid-3" style="margin-bottom:16px;">
-    <div class="alert alert-orange" style="margin-bottom:0;">
-      <div class="alert-title">🛡 3-Year Evidence Freshness Rule</div>
+<div class="page-hdr">
+<div class="page-tag">🛡 Section 6</div>
+<div class="page-title">UpGuard Vendor Risk Management SOP</div>
+<div class="page-desc">Full step-by-step process for creating, assessing, and managing vendors in UpGuard per UT policy IT1516.</div>
+</div>
+<div class="grid-3" style="margin-bottom:16px;">
+<div class="alert alert-orange" style="margin-bottom:0;">
+<div class="alert-title">🛡 3-Year Evidence Freshness Rule</div>
       SOC 2, ISO 27001, and HITRUST documentation must be dated within the last <strong>3 years</strong>. If missing or older, new documentation must be requested.
     </div>
-    <div class="alert alert-red" style="margin-bottom:0;">
-      <div class="alert-title">📊 Risk Score &gt; 600</div>
+<div class="alert alert-red" style="margin-bottom:0;">
+<div class="alert-title">📊 Risk Score &gt; 600</div>
       Triggers full technical risk assessment. Requires detailed vendor profile review and formal risk treatment plan.
     </div>
-    <div class="alert alert-amber" style="margin-bottom:0;">
-      <div class="alert-title">🛡 Coverage &lt; 90%</div>
+<div class="alert alert-amber" style="margin-bottom:0;">
+<div class="alert-title">🛡 Coverage &lt; 90%</div>
       Requires issuing a Gap Questionnaire with a mandatory 2-week (14-day) due date. Upload and review vendor responses in UpGuard.
     </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head open" onclick="toggleAcc(this)">
-      <div class="acc-title">1️⃣ Access UpGuard & Search/Create Vendor</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body open">
-      <ul class="styled">
-        <li>Access UpGuard at <span class="inline-code">https://cyber-risk.upguard.com/</span> with your UT credentials</li>
-        <li>Navigate to the <strong>Vendor Risk</strong> tab</li>
-        <li>Search the vendor URL — check if already being monitored</li>
-        <li>If not listed, click <strong>"+ Monitor new vendor"</strong></li>
-        <li>Search for vendor — verify domain name matches the correct vendor (many share names)</li>
-        <li>Click <strong>"Monitor"</strong> — you'll be auto-navigated to the vendor profile editing screen</li>
-        <li>If vendor doesn't appear, click <strong>"Attempt to scan [website name]"</strong></li>
-        <li>Navigate to <strong>Contacts</strong> in the sidebar → click <strong>"+ Add contact"</strong> with all available vendor contact info</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">2️⃣ Edit the Vendor Profile</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="grid-2">
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Vendor Summary Box</p>
-          <ul class="styled">
-            <li>Company Name (update from URL to company name if manually added)</li>
-            <li>Primary Domain</li>
-            <li>Industry (use best judgement or leave blank)</li>
-            <li>Notes — concise overview of vendor's service (use vendor "About us" page if needed)</li>
-          </ul>
-        </div>
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Custom Attributes Box</p>
-          <ul class="styled">
-            <li>Software Name</li>
-            <li>Department (requester's dept)</li>
-            <li>Technical Custodian Name & Email</li>
-            <li>Asset Owner Name & Email</li>
-            <li>Deployment Location</li>
-            <li>Critical System Integrations (leave empty if N/A)</li>
-            <li>Other System Integrations (leave empty if N/A)</li>
-            <li>Added by (your name)</li>
-            <li>Date of Approval (<strong>added after assessment only</strong>)</li>
-          </ul>
-        </div>
-      </div>
-      <hr class="section-divider">
-      <div class="grid-2">
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Labels Box — Relationships</p>
-          <ul class="styled">
-            <li><strong>In-Use:</strong> Vendor is in active use</li>
-            <li><strong>Business Data:</strong> Handles private business/enterprise data</li>
-            <li><strong>Customer Data:</strong> Handles customer/student private data</li>
-            <li><strong>Network Access:</strong> Access to internal networks</li>
-            <li><strong>Physical Access:</strong> Physical access to data center or offices</li>
-          </ul>
-          <p style="font-weight:700;font-size:13px;margin:10px 0 6px;color:var(--orange-dk);">Custom Labels (Compliance)</p>
-          <p style="font-size:13px;color:var(--grey-700);">CGMP · CUI · FERPA · GLBA · HIPAA · In-Review</p>
-        </div>
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Portfolio Box</p>
-          <ul class="styled">
-            <li>UTSA (Default)</li>
-            <li>UTC</li>
-            <li>UTHSC</li>
-            <li>UTIA</li>
-            <li>UTK</li>
-            <li>UT Martin</li>
-            <li>UT Southern</li>
-            <li>UTIPS</li>
-          </ul>
-          <p style="font-size:12px;color:var(--grey-500);margin-top:6px;">Vendors can exist in multiple portfolios if in-use at multiple campuses.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">3️⃣ Vendor Tier Classification</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <p style="font-size:13px;color:var(--grey-700);margin-bottom:14px;">Classify the vendor based on the inherent risk they pose to UT using Data Classification × Business Impact:</p>
-      <table class="tier-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Nominal</th>
-            <th>Low</th>
-            <th>High</th>
-            <th>Critical</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td style="text-align:left;padding:8px;font-weight:700;">Restricted</td><td class="t2">2</td><td class="t2">2</td><td class="t2">2</td><td class="t1">1</td></tr>
-          <tr><td style="text-align:left;padding:8px;font-weight:700;">Private</td><td class="t3">3</td><td class="t3">3</td><td class="t2">2</td><td class="t1">1</td></tr>
-          <tr><td style="text-align:left;padding:8px;font-weight:700;">Internal Use</td><td class="t4">4</td><td class="t3">3</td><td class="t2">2</td><td class="t1">1</td></tr>
-          <tr><td style="text-align:left;padding:8px;font-weight:700;">Public</td><td class="t4">4</td><td class="t3">3</td><td class="t2">2</td><td class="t2">2</td></tr>
-        </tbody>
-      </table>
-      <div class="grid-4" style="margin-top:14px;">
-        <div style="text-align:center;padding:10px;background:#DC2626;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 1 — Critical</div>
-        <div style="text-align:center;padding:10px;background:#F97316;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 2 — High</div>
-        <div style="text-align:center;padding:10px;background:#EAB308;color:#1F2937;border-radius:8px;font-weight:700;font-size:12px;">Tier 3 — Moderate</div>
-        <div style="text-align:center;padding:10px;background:#22C55E;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 4 — Low</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">4️⃣ Complete Security Profile & Upload Evidence</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <ul class="styled">
-        <li>Navigate to <strong>Security Profile</strong> in the sidebar</li>
-        <li>Gather documents from the original ticket or vendor: security policies, audit reports, compliance certificates</li>
-        <li>Click the blue <strong>Actions</strong> dropdown → <strong>+ Add Evidence</strong> → upload all relevant documents → click <strong>Analyze Evidence</strong></li>
-        <li>For ISO 27001: select <strong>"ISO 27001:2022"</strong> category under Core controls dropdown</li>
-        <li>For SOC 2: select <strong>"SOC 2 Compliance"</strong> or <strong>"SOC 2 Compliance and Attack surface controls"</strong> — use whichever outputs the better score</li>
-      </ul>
-      <hr class="section-divider">
-      <div class="grid-2">
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--green);">✅ Evidence That Scans Well</p>
-          <ul class="styled">
-            <li><strong>Full SOC 2 Type II report</strong> — complete attestation, not a 1–3 page summary</li>
-            <li><strong>ISO 27001 documentation</strong> — prioritize Statement of Applicability (AOC) over simple certificate</li>
-            <li><strong>Completed security questionnaires</strong> — HECVAT, UpGuard system questionnaire, policy/evidence packs</li>
-          </ul>
-        </div>
-        <div>
-          <p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--red);">❌ Insufficient Evidence (Alone)</p>
-          <ul class="styled">
-            <li><strong>ISO certificate images or short letters</strong> without control scope/detail — use for recordkeeping and expiry tracking only</li>
-            <li><strong>Low-check evidence</strong> — leads to low coverage, incomplete narratives, and inflated risk scores</li>
-          </ul>
-        </div>
-      </div>
-      <div class="alert alert-orange" style="margin-top:12px;margin-bottom:0;">
-        <div class="alert-title">📄 HECVAT → PDF Conversion</div>
+</div>
+<div class="accordion">
+<div class="acc-head open" onclick="toggleAcc(this)">
+<div class="acc-title">1️⃣ Access UpGuard &amp; Search/Create Vendor</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body open">
+<ul class="styled">
+<li>Access UpGuard at <span class="inline-code">https://cyber-risk.upguard.com/</span> with your UT credentials</li>
+<li>Navigate to the <strong>Vendor Risk</strong> tab</li>
+<li>Search the vendor URL — check if already being monitored</li>
+<li>If not listed, click <strong>"+ Monitor new vendor"</strong></li>
+<li>Search for vendor — verify domain name matches the correct vendor (many share names)</li>
+<li>Click <strong>"Monitor"</strong> — you'll be auto-navigated to the vendor profile editing screen</li>
+<li>If vendor doesn't appear, click <strong>"Attempt to scan [website name]"</strong></li>
+<li>Navigate to <strong>Contacts</strong> in the sidebar → click <strong>"+ Add contact"</strong> with all available vendor contact info</li>
+</ul>
+<button class="shot-btn" data-shot="upguard-step1">📷 View Screenshot</button>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">2️⃣ Edit the Vendor Profile</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<div class="grid-2">
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Vendor Summary Box</p>
+<ul class="styled">
+<li>Company Name (update from URL to company name if manually added)</li>
+<li>Primary Domain</li>
+<li>Industry (use best judgement or leave blank)</li>
+<li>Notes — concise overview of vendor's service (use vendor "About us" page if needed)</li>
+</ul>
+</div>
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Custom Attributes Box</p>
+<ul class="styled">
+<li>Software Name</li>
+<li>Department (requester's dept)</li>
+<li>Technical Custodian Name &amp; Email</li>
+<li>Asset Owner Name &amp; Email</li>
+<li>Deployment Location</li>
+<li>Critical System Integrations (leave empty if N/A)</li>
+<li>Other System Integrations (leave empty if N/A)</li>
+<li>Added by (your name)</li>
+<li>Date of Approval (<strong>added after assessment only</strong>)</li>
+</ul>
+</div>
+</div>
+<hr class="section-divider"/>
+<div class="grid-2">
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Labels Box — Relationships</p>
+<ul class="styled">
+<li><strong>In-Use:</strong> Vendor is in active use</li>
+<li><strong>Business Data:</strong> Handles private business/enterprise data</li>
+<li><strong>Customer Data:</strong> Handles customer/student private data</li>
+<li><strong>Network Access:</strong> Access to internal networks</li>
+<li><strong>Physical Access:</strong> Physical access to data center or offices</li>
+</ul>
+<p style="font-weight:700;font-size:13px;margin:10px 0 6px;color:var(--orange-dk);">Custom Labels (Compliance)</p>
+<p style="font-size:13px;color:var(--grey-700);">CGMP · CUI · FERPA · GLBA · HIPAA · In-Review</p>
+</div>
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--orange-dk);">Portfolio Box</p>
+<ul class="styled">
+<li>UTSA (Default)</li>
+<li>UTC</li>
+<li>UTHSC</li>
+<li>UTIA</li>
+<li>UTK</li>
+<li>UT Martin</li>
+<li>UT Southern</li>
+<li>UTIPS</li>
+</ul>
+<p style="font-size:12px;color:var(--grey-500);margin-top:6px;">Vendors can exist in multiple portfolios if in-use at multiple campuses.</p>
+</div>
+</div>
+<button class="shot-btn" data-shot="upguard-step2">📷 View Screenshot</button>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">3️⃣ Vendor Tier Classification</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<p style="font-size:13px;color:var(--grey-700);margin-bottom:14px;">Classify the vendor based on the inherent risk they pose to UT using Data Classification × Business Impact:</p>
+<table class="tier-table">
+<thead>
+<tr>
+<th></th>
+<th>Nominal</th>
+<th>Low</th>
+<th>High</th>
+<th>Critical</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left;padding:8px;font-weight:700;">Restricted</td><td class="t2">2</td><td class="t2">2</td><td class="t2">2</td><td class="t1">1</td></tr>
+<tr><td style="text-align:left;padding:8px;font-weight:700;">Private</td><td class="t3">3</td><td class="t3">3</td><td class="t2">2</td><td class="t1">1</td></tr>
+<tr><td style="text-align:left;padding:8px;font-weight:700;">Internal Use</td><td class="t4">4</td><td class="t3">3</td><td class="t2">2</td><td class="t1">1</td></tr>
+<tr><td style="text-align:left;padding:8px;font-weight:700;">Public</td><td class="t4">4</td><td class="t3">3</td><td class="t2">2</td><td class="t2">2</td></tr>
+</tbody>
+</table>
+<div class="grid-4" style="margin-top:14px;">
+<div style="text-align:center;padding:10px;background:#DC2626;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 1 — Critical</div>
+<div style="text-align:center;padding:10px;background:#F97316;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 2 — High</div>
+<div style="text-align:center;padding:10px;background:#EAB308;color:#1F2937;border-radius:8px;font-weight:700;font-size:12px;">Tier 3 — Moderate</div>
+<div style="text-align:center;padding:10px;background:#22C55E;color:#fff;border-radius:8px;font-weight:700;font-size:12px;">Tier 4 — Low</div>
+</div>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">4️⃣ Complete Security Profile &amp; Upload Evidence</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<ul class="styled">
+<li>Navigate to <strong>Security Profile</strong> in the sidebar</li>
+<li>Gather documents from the original ticket or vendor: security policies, audit reports, compliance certificates</li>
+<li>Click the blue <strong>Actions</strong> dropdown → <strong>+ Add Evidence</strong> → upload all relevant documents → click <strong>Analyze Evidence</strong></li>
+<li>For ISO 27001: select <strong>"ISO 27001:2022"</strong> category under Core controls dropdown</li>
+<li>For SOC 2: select <strong>"SOC 2 Compliance"</strong> or <strong>"SOC 2 Compliance and Attack surface controls"</strong> — use whichever outputs the better score</li>
+</ul>
+<hr class="section-divider"/>
+<div class="grid-2">
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--green);">✅ Evidence That Scans Well</p>
+<ul class="styled">
+<li><strong>Full SOC 2 Type II report</strong> — complete attestation, not a 1–3 page summary</li>
+<li><strong>ISO 27001 documentation</strong> — prioritize Statement of Applicability (AOC) over simple certificate</li>
+<li><strong>Completed security questionnaires</strong> — HECVAT, UpGuard system questionnaire, policy/evidence packs</li>
+</ul>
+</div>
+<div>
+<p style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--red);">❌ Insufficient Evidence (Alone)</p>
+<ul class="styled">
+<li><strong>ISO certificate images or short letters</strong> without control scope/detail — use for recordkeeping and expiry tracking only</li>
+<li><strong>Low-check evidence</strong> — leads to low coverage, incomplete narratives, and inflated risk scores</li>
+</ul>
+</div>
+</div>
+<div class="alert alert-orange" style="margin-top:12px;margin-bottom:0;">
+<div class="alert-title">📄 HECVAT → PDF Conversion</div>
         Open HECVAT in Excel → File &gt; Save as Adobe PDF → Conversion Range = Entire Workbook → Conversion Options = Fit to paper width → Click 'Convert to PDF'
       </div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">5️⃣ Domain Selection & Gap Questionnaire</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <ul class="styled">
-        <li>While evidence is being analyzed, scroll to <strong>Domains and IPs</strong> box</li>
-        <li>Click the gear icon → <strong>Deselect all domains except the primary domain</strong> (unless vendor is a SaaS provider) → Hit <strong>"Save changes"</strong></li>
-        <li>After analysis completes, check <strong>Check Coverage</strong> percentage</li>
-        <li>If coverage is <strong>below 90%</strong> → click Actions → <strong>Request evidence</strong> → select <strong>"UpGuard Security Profile gap questionnaire"</strong> → set vendor contact and due date (<strong>2 weeks standard</strong>) → Send</li>
-        <li>Ideally wait for vendor response before starting risk assessment. If no response within 2 weeks, proceed with assessment.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">6️⃣ Start the Risk Assessment</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="alert alert-amber">
-        <div class="alert-title">⚠ Critical Order of Operations</div>
+<button class="shot-btn" data-shot="upguard-step4">📷 View Screenshot</button>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">5️⃣ Domain Selection &amp; Gap Questionnaire</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<ul class="styled">
+<li>While evidence is being analyzed, scroll to <strong>Domains and IPs</strong> box</li>
+<li>Click the gear icon → <strong>Deselect all domains except the primary domain</strong> (unless vendor is a SaaS provider) → Hit <strong>"Save changes"</strong></li>
+<li>After analysis completes, check <strong>Check Coverage</strong> percentage</li>
+<li>If coverage is <strong>below 90%</strong> → click Actions → <strong>Request evidence</strong> → select <strong>"UpGuard Security Profile gap questionnaire"</strong> → set vendor contact and due date (<strong>2 weeks standard</strong>) → Send</li>
+<li>Ideally wait for vendor response before starting risk assessment. If no response within 2 weeks, proceed with assessment.</li>
+</ul>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">6️⃣ Start the Risk Assessment</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<div class="alert alert-amber">
+<div class="alert-title">⚠ Critical Order of Operations</div>
         Add and analyze ALL evidence BEFORE starting the risk assessment. If evidence is added after starting, the narrative is point-in-time and won't fully update — you'll need to click <strong>Refine</strong> to regenerate.
       </div>
-      <ul class="styled">
-        <li>Next to <strong>Risk assessment</strong>, click the <strong>"Not started"</strong> button</li>
-        <li>AI will conduct the risk assessment — may take a few minutes</li>
-        <li>If risk rating score is <strong>600 or higher</strong> → return to Vendor Summary, enter approval date, add "In-Use" tag → approve vendor in TDX → <strong>DONE</strong></li>
-        <li>If risk rating is <strong>below 600</strong> → continue to risk treatment steps below</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">7️⃣ Treating & Adjusting Risks (Score Below 600)</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <ol class="styled">
-        <li>Scroll to <strong>Manage Risks</strong> box → click <strong>Filters</strong> → select <strong>Critical Risk</strong> and <strong>High Risk</strong> under Severity</li>
-        <li>Review filtered controls — note controls with citations (controls without citations = scanning risk controls)</li>
-        <li>Go back to <strong>Security Profile</strong> → search for each noted control → review Summary, Comments, and Citations</li>
-      </ol>
-      <hr class="section-divider">
-      <div class="grid-3">
-        <div class="highlight-box">
-          <div class="highlight-box-title">❌ Reject Citation</div>
-          <p style="font-size:12px;color:var(--grey-700);">If AI scanned incorrectly (citation has nothing to do with the control/risk). Sometimes auto-clears the risk to "pass."</p>
-        </div>
-        <div class="highlight-box">
-          <div class="highlight-box-title">⚖️ Waive Risk</div>
-          <p style="font-size:12px;color:var(--grey-700);">If citations meet control requirements or risk doesn't auto-clear after rejecting bad citations. Must provide valid justification.</p>
-        </div>
-        <div class="highlight-box">
-          <div class="highlight-box-title">🔧 Adjust Risk</div>
-          <p style="font-size:12px;color:var(--grey-700);">If citations show compensating controls — reduce severity by one level (e.g., High → Medium). Document rationale.</p>
-        </div>
-      </div>
-      <ul class="styled" style="margin-top:12px;">
-        <li>After managing all critical/high controls → click your <strong>"In Progress"</strong> risk assessment → click <strong>Refine</strong></li>
-        <li>Select Audience, Level of Detail, Custom Prompt, and Scope using best judgement → click <strong>Apply</strong></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">8️⃣ Complete & Publish Risk Assessment Report</div>
-      <span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <ol class="styled">
-        <li>Scroll to <strong>Risk details</strong> → select all Critical/High risks to highlight → confirm they appear in <strong>Key Risks</strong></li>
-        <li>Optionally edit the executive summary and conclusion using the <strong>Pencil icon</strong></li>
-        <li>Click the blue <strong>Publish</strong> button → keep the existing reassessment date (may be adjusted later based on criticality)</li>
-        <li>At top of page → <strong>Generate Report</strong> → select <strong>"Security Profile Risk Assessment Report"</strong> → <strong>Quick generate</strong></li>
-        <li>Select <strong>"Yes, base this report on a risk assessment"</strong> with "Latest – Security Profile Assessment" → Next → Generate</li>
-      </ol>
-      <div class="alert alert-green" style="margin-top:12px;margin-bottom:0;">
-        <div class="alert-title">🎉 Congratulations!</div>
+<ul class="styled">
+<li>Next to <strong>Risk assessment</strong>, click the <strong>"Not started"</strong> button</li>
+<li>AI will conduct the risk assessment — may take a few minutes</li>
+<li>If risk rating score is <strong>600 or higher</strong> → return to Vendor Summary, enter approval date, add "In-Use" tag → approve vendor in TDX → <strong>DONE</strong></li>
+<li>If risk rating is <strong>below 600</strong> → continue to risk treatment steps below</li>
+</ul>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">7️⃣ Treating &amp; Adjusting Risks (Score Below 600)</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<ol class="styled">
+<li>Scroll to <strong>Manage Risks</strong> box → click <strong>Filters</strong> → select <strong>Critical Risk</strong> and <strong>High Risk</strong> under Severity</li>
+<li>Review filtered controls — note controls with citations (controls without citations = scanning risk controls)</li>
+<li>Go back to <strong>Security Profile</strong> → search for each noted control → review Summary, Comments, and Citations</li>
+</ol>
+<hr class="section-divider"/>
+<div class="grid-3">
+<div class="highlight-box">
+<div class="highlight-box-title">❌ Reject Citation</div>
+<p style="font-size:12px;color:var(--grey-700);">If AI scanned incorrectly (citation has nothing to do with the control/risk). Sometimes auto-clears the risk to "pass."</p>
+</div>
+<div class="highlight-box">
+<div class="highlight-box-title">⚖️ Waive Risk</div>
+<p style="font-size:12px;color:var(--grey-700);">If citations meet control requirements or risk doesn't auto-clear after rejecting bad citations. Must provide valid justification.</p>
+</div>
+<div class="highlight-box">
+<div class="highlight-box-title">🔧 Adjust Risk</div>
+<p style="font-size:12px;color:var(--grey-700);">If citations show compensating controls — reduce severity by one level (e.g., High → Medium). Document rationale.</p>
+</div>
+</div>
+<ul class="styled" style="margin-top:12px;">
+<li>After managing all critical/high controls → click your <strong>"In Progress"</strong> risk assessment → click <strong>Refine</strong></li>
+<li>Select Audience, Level of Detail, Custom Prompt, and Scope using best judgement → click <strong>Apply</strong></li>
+</ul>
+</div>
+</div>
+<div class="accordion">
+<div class="acc-head" onclick="toggleAcc(this)">
+<div class="acc-title">8️⃣ Complete &amp; Publish Risk Assessment Report</div>
+<span class="acc-arrow">▼</span>
+</div>
+<div class="acc-body">
+<ol class="styled">
+<li>Scroll to <strong>Risk details</strong> → select all Critical/High risks to highlight → confirm they appear in <strong>Key Risks</strong></li>
+<li>Optionally edit the executive summary and conclusion using the <strong>Pencil icon</strong></li>
+<li>Click the blue <strong>Publish</strong> button → keep the existing reassessment date (may be adjusted later based on criticality)</li>
+<li>At top of page → <strong>Generate Report</strong> → select <strong>"Security Profile Risk Assessment Report"</strong> → <strong>Quick generate</strong></li>
+<li>Select <strong>"Yes, base this report on a risk assessment"</strong> with "Latest – Security Profile Assessment" → Next → Generate</li>
+</ol>
+<div class="alert alert-green" style="margin-top:12px;margin-bottom:0;">
+<div class="alert-title">🎉 Congratulations!</div>
         You've completed an UpGuard Risk Assessment. Return to TDX and approve/reject the vendor through the Current Activities panel.
       </div>
-    </div>
-  </div>
 </div>
-
+</div>
+</div>
 <!-- ============================================================ INTEGRATIONS -->
 <div class="tab-panel" id="panel-integrations">
-  <div class="page-hdr">
-    <div class="page-tag">🔗 Section 9</div>
-    <div class="page-title">Integration Governance Directives</div>
-    <div class="page-desc">Mandatory routing rules for all software integrations — follow exactly as specified.</div>
-  </div>
-
-  <div class="alert alert-red">
-    <div class="alert-title">🛑 Google Suite Integration Policy</div>
-    Google Suite integrations are <strong>NOT ALLOWED UNDER ANY CIRCUMSTANCES</strong>. If a ticket contains a positive response for Google Suite integration, immediately reassign the ticket to <span class="inline-code">OIT_Platform Services</span> (<strong>Mike Stanley</strong>) without GRC team review.
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">🪟</span> Microsoft Integrations</div>
-      <ul class="styled">
-        <li>Escalate all Microsoft integrations to <strong>Jet Toomey</strong></li>
-        <li>Review required: permission structure, API scopes, and data access</li>
-        <li>Must complete prior to technical sign-off</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">👤</span> Single-User Integration Requests</div>
-      <div class="alert alert-red" style="margin-bottom:0;">
-        <div class="alert-title">⛔ Automatic Denial</div>
-        Single-user enterprise integration requests are subject to <strong>AUTOMATIC DENIAL</strong>. Reassign to <strong>Stephen Brown</strong> or <strong>Dan Fast</strong> to execute formal denial.
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">🗺</span> Integration Routing Quick Reference</div>
-    <table class="tbl">
-      <thead><tr><th>Integration Type</th><th>Action Required</th><th>Route To</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-red">Google Suite</span></td>
-          <td>Immediate reassignment — no GRC review</td>
-          <td><strong>OIT_Platform Services (Mike Stanley)</strong></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-blue">Microsoft</span></td>
-          <td>Permission & API scope review required</td>
-          <td><strong>Jet Toomey</strong></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-grey">Single-User Enterprise</span></td>
-          <td>Automatic denial — formal rejection required</td>
-          <td><strong>Stephen Brown or Dan Fast</strong></td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-green">Standard Cloud</span></td>
-          <td>Standard GRC review process</td>
-          <td>GRC Analyst</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">🔗 Work in Progress</div>
+<div class="page-title">Integration Guidance</div>
+<div class="page-desc">This section is being updated. Consult the GRC team before routing or approving an integration-related request.</div>
 </div>
-
+<div class="alert alert-orange">
+<div class="alert-title">Work in Progress</div>
+  Integration review guidance will be added here as approved procedures become available.
+</div>
+</div>
 <!-- ============================================================ APPROVAL/DENIAL -->
 <div class="tab-panel" id="panel-approval">
-  <div class="page-hdr">
-    <div class="page-tag">✅ Section 10</div>
-    <div class="page-title">Form Workflow Execution & Approval/Denial Hierarchy</div>
-    <div class="page-desc">Critical workflow rules for approvals, denials, and escalation procedures.</div>
+<div class="page-hdr">
+<div class="page-tag">✅ Section 8</div>
+<div class="page-title">Approval &amp; Denial</div>
+<div class="page-desc">Complete workflow decisions through Current Activities and follow the escalation process for denials.</div>
+</div>
+<div class="alert alert-red">
+<div class="alert-title">🟧 Critical Workflow Closure Mandate</div>
+<strong>NEVER</strong> set <span class="inline-code">Status = Resolved</span> manually for tickets governed by the <em>Security | Data and Technology Risk Review</em> workflow form. Analysts <strong>MUST</strong> click either <strong>Approve Ticket</strong> or <strong>Reject Ticket</strong> under the <strong>Current Activities</strong> panel on the right side of the ticket view. Setting Status = Resolved manually bypasses workflow execution.
   </div>
-
-  <div class="alert alert-red">
-    <div class="alert-title">🟧 Critical Workflow Closure Mandate</div>
-    <strong>NEVER</strong> set <span class="inline-code">Status = Resolved</span> manually for tickets governed by the <em>Security | Data and Technology Risk Review</em> workflow form. Analysts <strong>MUST</strong> click either <strong>Approve Ticket</strong> or <strong>Reject Ticket</strong> under the <strong>Current Activities</strong> panel on the right side of the ticket view. Setting Status = Resolved manually bypasses workflow execution.
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">✅</span> 10.1 — Canned Approval Statements</div>
-    <p style="font-size:12px;color:var(--grey-500);margin-bottom:16px;">Click the copy button to copy each statement to clipboard.</p>
-
-    <div style="margin-bottom:16px;">
-      <p style="font-weight:700;font-size:13px;color:var(--grey-700);margin-bottom:6px;">Approved — Sensitive Data & Systems:</p>
-      <div class="code-block" id="approval1">"Approved. Application stores sensitive data and connects to UTK enterprise systems. Reviewed ASSURANCE DOCUMENTS and completed vendor profile in UpGuard."</div>
-      <button class="copy-btn" onclick="copyText('approval1', this)">📋 Copy Statement</button>
-    </div>
-
-    <div style="margin-bottom:16px;">
-      <p style="font-weight:700;font-size:13px;color:var(--grey-700);margin-bottom:6px;">Approved — Low Risk Standalone:</p>
-      <div class="code-block" id="approval2">"Approved as low risk. No sensitive data and no access to UT enterprise systems."</div>
-      <button class="copy-btn" onclick="copyText('approval2', this)">📋 Copy Statement</button>
-    </div>
-
-    <div>
-      <p style="font-weight:700;font-size:13px;color:var(--grey-700);margin-bottom:6px;">Approved — Non-Sensitive & UpGuard Complete:</p>
-      <div class="code-block" id="approval3">"Approved. Application does not store sensitive data and is not connected to UT enterprise systems. Reviewed ASSURANCE DOCUMENTS and completed vendor profile in UpGuard."</div>
-      <button class="copy-btn" onclick="copyText('approval3', this)">📋 Copy Statement</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">🚫</span> 10.2 — Formal Denial Escalation Hierarchy</div>
-    <div class="alert alert-amber">
-      <div class="alert-title">⚠ Analysts Do Not Issue Rejections Independently</div>
+<div class="card">
+<div class="card-title"><span class="ico">🚫</span> 10.2 — Formal Denial Escalation Hierarchy</div>
+<div class="alert alert-amber">
+<div class="alert-title">⚠ Analysts Do Not Issue Rejections Independently</div>
       All rejections must follow the 3-step escalation hierarchy below.
     </div>
-    <div class="step-row" style="margin-bottom:0;">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-label">Consult</div>
-        <div class="step-text">Contact Stephen Brown or Dan Fast via MS Teams to confirm rejection</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-label">Reassign</div>
-        <div class="step-text">Reassign ticket to Stephen Brown or Dan Fast with risk findings & evidence attached</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-label">Execute</div>
-        <div class="step-text">Stephen Brown or Dan Fast will execute formal ticket rejection in TDX</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">🔔</span> 10.3 — Reprocessing Workflow Notifications</div>
-    <p style="font-size:13px;color:var(--grey-700);">If a requester reports missing Authorization to Proceed notifications, search Outlook for the <strong>Ticket ID</strong> and the phrase <strong>"Workflow Notification"</strong>.</p>
-  </div>
+<div class="step-row" style="margin-bottom:0;">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-label">Consult</div>
+<div class="step-text">Contact Stephen Brown or Dan Fast via MS Teams to confirm rejection</div>
 </div>
-
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-label">Reassign</div>
+<div class="step-text">Reassign ticket to Stephen Brown or Dan Fast with risk findings &amp; evidence attached</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-label">Execute</div>
+<div class="step-text">Stephen Brown or Dan Fast will execute formal ticket rejection in TDX</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title"><span class="ico">🔔</span> 10.3 — Reprocessing Workflow Notifications</div>
+<p style="font-size:13px;color:var(--grey-700);">If a requester reports missing Authorization to Proceed notifications, search Outlook for the <strong>Ticket ID</strong> and the phrase <strong>"Workflow Notification"</strong>.</p>
+</div>
+</div>
 <!-- ============================================================ TIMEOUTS -->
 <div class="tab-panel" id="panel-timeout">
-  <div class="page-hdr">
-    <div class="page-tag">⏱ Section 11</div>
-    <div class="page-title">Ticket Timeout & Stalled Protocols</div>
-    <div class="page-desc">Mandatory actions at each timeline milestone for stalled or non-responsive tickets.</div>
-  </div>
-
-  <div class="card">
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>Timeline Milestone</th>
-          <th>Required Operational Action & Template Application</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-amber">Day 7 (1 Week)</span></td>
-          <td>Send follow-up email via TDX inquiring if the requester wishes to keep the request active.</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-red">Day 14 (2 Weeks)</span></td>
-          <td>Apply template <span class="inline-code">GRC &gt; Stalled Ticket</span> or <span class="inline-code">GRC &gt; Ticket Closure</span>. Resolve ticket.</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-blue">7-Day Grace Period</span></td>
-          <td>Requester may re-open ticket within 7 calendar days simply by replying to the TDX email.</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-grey">After 21 Days Total</span></td>
-          <td>Ticket permanently locked. Re-opening prohibited; requester must submit a new ticket.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grid-3">
-    <div class="stat-box"><div class="stat-val">7</div><div class="stat-label">Days — First Follow-Up</div></div>
-    <div class="stat-box"><div class="stat-val">14</div><div class="stat-label">Days — Apply Stalled Template</div></div>
-    <div class="stat-box"><div class="stat-val">21</div><div class="stat-label">Days — Permanently Locked</div></div>
-  </div>
-
-  <div class="alert alert-blue">
-    <div class="alert-title">ℹ Grace Period Note</div>
+<div class="page-hdr">
+<div class="page-tag">⏱ Section 9</div>
+<div class="page-title">Ticket Timeout &amp; Stalled Protocols</div>
+<div class="page-desc">Mandatory actions at each timeline milestone for stalled or non-responsive tickets.</div>
+</div>
+<div class="card">
+<table class="tbl">
+<thead>
+<tr>
+<th>Timeline Milestone</th>
+<th>Required Operational Action &amp; Template Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="badge badge-amber">Day 7 (1 Week)</span></td>
+<td>Send follow-up email via TDX inquiring if the requester wishes to keep the request active.</td>
+</tr>
+<tr>
+<td><span class="badge badge-red">Day 14 (2 Weeks)</span></td>
+<td>Apply template <span class="inline-code">GRC &gt; Stalled Ticket</span> or <span class="inline-code">GRC &gt; Ticket Closure</span>. Resolve ticket.</td>
+</tr>
+<tr>
+<td><span class="badge badge-blue">7-Day Grace Period</span></td>
+<td>Requester may re-open ticket within 7 calendar days simply by replying to the TDX email.</td>
+</tr>
+<tr>
+<td><span class="badge badge-grey">After 21 Days Total</span></td>
+<td>Ticket permanently locked. Re-opening prohibited; requester must submit a new ticket.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid-3">
+<div class="stat-box"><div class="stat-val">7</div><div class="stat-label">Days — First Follow-Up</div></div>
+<div class="stat-box"><div class="stat-val">14</div><div class="stat-label">Days — Apply Stalled Template</div></div>
+<div class="stat-box"><div class="stat-val">21</div><div class="stat-label">Days — Permanently Locked</div></div>
+</div>
+<div class="alert alert-blue">
+<div class="alert-title">ℹ Grace Period Note</div>
     After ticket closure at Day 14, the requester has a <strong>7-day grace period</strong> (through Day 21) to simply reply to the TDX email to automatically reopen the ticket. After Day 21, they must submit a completely new ticket.
   </div>
 </div>
-
-<!-- ============================================================ EMAIL TEMPLATES -->
-<div class="tab-panel" id="panel-templates">
-  <div class="page-hdr">
-    <div class="page-tag">📧 Section 5</div>
-    <div class="page-title">Standard Response Templates</div>
-    <div class="page-desc">Click any template to expand, then use the Copy button to grab the full text.</div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">📄 Need Security Documentation</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl1">Hi [Requestor Name],
-
-I hope you're doing well!
-
-I've begun reviewing your request and determined that it requires a full security assessment due to its high-risk classification, based on [business impact rating/data type/other applicable factor].
-
-To proceed, we need security documentation from the vendor. Any of the following third-party assurance documents would be acceptable for us to begin the assessment:
-  • SOC 2 Type II report
-  • ISO 27001 certificate
-  • HITRUST certification
-  • ISO 27001 certificate with an attestation of compliance
-
-If the vendor cannot provide a third-party attestation, we can begin the review with alternative security documentation, such as a completed HECVAT, TX-RAMP authorization, or FedRAMP authorization package.
-
-Once you have obtained one or more of these documents, please attach them to this ticket so we can proceed with the IT security review. You may either:
-  • Reply to this email with the documents attached, or
-  • Click the "View Your Ticket Online" link at the top of this email and upload the files directly to the ticket.
-
-Thank you,
-[Your Name]</div>
-      <button class="copy-btn" onclick="copyText('tpl1', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">⏰ Stalled-Out Ticket (Passed 2 Weeks)</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl2">Hi [Requestor Name],
-
-I hope you're doing well!
-
-I wanted to follow up regarding your outstanding request. Since I haven't received a response from you since [Date], I will be going ahead and closing out this ticket.
-
-If you still require assistance or have any further questions, simply reply to this message and your ticket will be automatically reopened — we're happy to help!
-
-Thank you!
-[Your Name]</div>
-      <button class="copy-btn" onclick="copyText('tpl2', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">👻 Been Ghosted — Follow Up</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl3">Hi [Requestor Name],
-
-I hope you're doing well!
-
-I just wanted to follow up on the request for security documentation for the [Vendor] solution. To proceed, we need one or more of the following:
-  • SOC2 Type II Attestation
-  • ISO 27001 Certificate
-  • HITRUST Certificate
-  • ISO 27001 Certificate with Attestation of Compliance
-
-If you've gathered the documents, please reply to this email or upload them via the "View Your Ticket Online" link. Let me know if you need assistance — I'm happy to help!
-
-Thanks,
-[Your Name]</div>
-      <button class="copy-btn" onclick="copyText('tpl3', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">📊 Business Impact Clarification — High</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl4">Hi [Requestor Name],
-
-I hope you are doing well!
-
-I've begun reviewing your request and wanted to reach out regarding the Business Impact classification indicated in your submission.
-
-A High Business Impact classification indicates that if the system were unavailable for 72 hours or less, it would result in a severe or catastrophic effect on University operations, assets, or individuals. If you believe that accurately reflects the nature of this system, please let me know why and I will proceed accordingly.
-
-If not, please let me know which of the below classifications would be better suited:
-  • Nominal – System unavailability exceeding two weeks would have minimal to no impact on organizational operations, assets, or individuals.
-  • Low – System unavailability of 72 hours to two weeks could be expected to have an adverse effect on organizational operations, assets, or individuals.
-  • High – System unavailability of 72 hours or less could be expected to have a severe or catastrophic effect on organizational operations, assets, or individuals.
-  • Critical – The system is related to control systems that support the University and, if subverted, could pose a life-threatening risk to University employees, students, or others using University facilities.
-
-Thank you!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl4', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🚨 Business Impact Clarification — Critical</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl5">Hi [Requestor Name],
-
-I hope you are doing well!
-
-I've begun reviewing your request and wanted to reach out regarding the Business Impact classification indicated in your submission.
-
-A Critical Business Impact classification indicates that if the system were unavailable for any span of time it could have life-threatening consequences to University employees, students, or other UT affiliated persons. If you believe that accurately reflects the nature of this system, please let me know and I will proceed accordingly.
-
-If not, please let me know which of the below classifications would be better suited:
-  • Nominal – System unavailability exceeding two weeks would have minimal to no impact on organizational operations, assets, or individuals.
-  • Low – System unavailability of 72 hours to two weeks could be expected to have an adverse effect on organizational operations, assets, or individuals.
-  • High – System unavailability of 72 hours or less could be expected to have a severe or catastrophic effect on organizational operations, assets, or individuals.
-  • Critical – The system is related to control systems that support the University and, if subverted, could pose a life-threatening risk to University employees, students, or others using University facilities.
-
-Thank you!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl5', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🎫 Submitting a TDX Ticket</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl6">Hi [Requestor Name],
-
-I hope you are doing well!
-
-It appears that you will need to submit a TDX Data and Technology Risk Review Ticket for this request since [Insert context of the situation].
-
-Please use the link below to submit your TDX request and we will begin the security review for your product.
-
-Data and Technology Risk Review: [Insert Link]
-
-Let me know if you have any questions or need any help filling out the form — I'd be happy to walk you through it.
-
-Thanks!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl6', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">✅ Auto-Approved Ticket Re-Opened by Requestor</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl7">Hi [Requestor Name],
-
-I hope you're doing well!
-
-It appears this ticket was deemed low risk and auto approved by our system. You should have received our Authorization to Proceed language immediately after submitting the ticket.
-
-No further steps are needed at this time. Please don't hesitate to reach out if you have any other questions!
-
-Thank you!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl7', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🔄 Auto-Approval After Form Correction</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl8">Hi [Requestor Name],
-
-No worries at all! I can go ahead and update the form on our end.
-
-Based on your responses in the other categories, this appears to be a low-risk request and should be auto-approved. I will re-run the workflow, and you should receive our Authorization to Proceed language shortly.
-
-Thank you!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl8', this)">📋 Copy Template</button>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)">
-      <div class="acc-title">🏷 Vendor Already Assessed in UpGuard</div><span class="acc-arrow">▼</span>
-    </div>
-    <div class="acc-body">
-      <div class="code-block" id="tpl9">Hi [Requestor Name],
-
-Hope all is well!
-
-It appears that we have previously assessed this vendor in recent years, and they continue to maintain a satisfactory score in our vendor management tool. Based on that risk assessment, we will proceed with approving the vendor.
-
-You should be receiving our Authorization to Proceed Language Soon!
-
-Thank you!
-[Your name]</div>
-      <button class="copy-btn" onclick="copyText('tpl9', this)">📋 Copy Template</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ PERSONNEL -->
-<div class="tab-panel" id="panel-personnel">
-  <div class="page-hdr">
-    <div class="page-tag">👥 Section 12</div>
-    <div class="page-title">Key Personnel Directory & Campus Roster</div>
-    <div class="page-desc">Quick-reference contacts for GRC operations, specialty reviews, and UT System campus leads.</div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="ico">🏢</span> GRC Core Operations Contacts</div>
-      <table class="tbl">
-        <thead><tr><th>Role</th><th>Contact(s)</th></tr></thead>
-        <tbody>
-          <tr><td>General Questions</td><td>Brian Stubblefield, Ryan Kearn, Michael Owutu</td></tr>
-          <tr><td>Verification & Denials</td><td>Stephen Brown, Dan Fast</td></tr>
-          <tr><td>Contracts Review</td><td>Stephen Brown, Dan Fast, Brian Stubblefield</td></tr>
-          <tr><td>PCI Compliance</td><td>Stephen Brown</td></tr>
-          <tr><td>CMMC & GLBA Review</td><td>Ryan Kearn, Michael Owutu</td></tr>
-          <tr><td>Platform Services</td><td>Mike Stanley</td></tr>
-          <tr><td>Cloud Integrations</td><td>Amanda Arz</td></tr>
-          <tr><td>Microsoft Integrations</td><td>Jet Toomey</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🎓</span> UT System Campus Leads</div>
-      <table class="tbl">
-        <thead><tr><th>Campus</th><th>Lead(s)</th></tr></thead>
-        <tbody>
-          <tr><td>UT Southern</td><td>Ben Hatten</td></tr>
-          <tr><td>UT Chattanooga</td><td>Ashton Jolley</td></tr>
-          <tr><td>UT Martin</td><td>Brian Stubblefield</td></tr>
-          <tr><td>UTHSC</td><td>Randy James, Chris Madeksho</td></tr>
-          <tr><td>UTIA</td><td>Sandy Lindsey</td></tr>
-          <tr><td>IPS</td><td>Chris Roberts</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">🗺</span> Routing Quick Reference</div>
-    <table class="tbl">
-      <thead><tr><th>Situation</th><th>Route To</th><th>Action</th></tr></thead>
-      <tbody>
-        <tr><td>Google Suite Integration detected</td><td><strong>Mike Stanley</strong> (OIT_Platform Services)</td><td>Reassign immediately — no GRC review</td></tr>
-        <tr><td>Microsoft Integration detected</td><td><strong>Jet Toomey</strong></td><td>Permission & API scope review</td></tr>
-        <tr><td>Rejection needed</td><td><strong>Stephen Brown or Dan Fast</strong></td><td>Consult via Teams → reassign → they execute</td></tr>
-        <tr><td>Contracts Review needed</td><td><strong>Stephen Brown, Dan Fast, or Brian Stubblefield</strong></td><td>Assign ticket with documentation</td></tr>
-        <tr><td>PCI/Payment processing</td><td><strong>Stephen Brown</strong></td><td>Apply PCI Docs template</td></tr>
-        <tr><td>CMMC or GLBA review</td><td><strong>Ryan Kearn or Michael Owutu</strong></td><td>Consult and document in feed</td></tr>
-        <tr><td>Cloud integration questions</td><td><strong>Amanda Arz</strong></td><td>Consult prior to approval</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
 <!-- ============================================================ QA CHECKLIST -->
 <div class="tab-panel" id="panel-qa">
-  <div class="page-hdr">
-    <div class="page-tag">✔ Section 13</div>
-    <div class="page-title">Analyst Quality Assurance Checklist</div>
-    <div class="page-desc">Complete all items before closing any ticket. Click each item to mark complete.</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="ico">📊</span> Completion Progress</div>
-    <div class="progress-bar-wrap"><div class="progress-bar" id="qa-progress" style="width:0%"></div></div>
-    <p style="font-size:12px;color:var(--grey-500);" id="qa-count">0 of 10 items completed</p>
-  </div>
-
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Time Tracking:</strong> Time Type logged on EVERY ticket update or closure — zero exceptions permitted.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Data Classification:</strong> Verified against actual data elements; highest applicable classification enforced.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>UpGuard Validation:</strong> Evidence within 3-year limit; Excel HECVAT converted to PDF prior to upload.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Workflow Execution:</strong> Approved/Rejected via Current Activities panel — never manual Status = Resolved.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Denial Verification:</strong> Rejections confirmed with Stephen Brown or Dan Fast prior to execution.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Google Suite Check:</strong> Ticket verified to contain no Google Suite integration — or immediately reassigned to OIT_Platform Services.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>UpGuard Score:</strong> Risk rating confirmed at 600+ before approval; if below 600, risks treated and documented.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Evidence Coverage:</strong> Check coverage at or above 90%; gap questionnaire sent if below threshold.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Feed Documentation:</strong> All handoffs, decisions, and status changes documented in TDX ticket feed.</div>
-  </div>
-  <div onclick="toggleCheck(this)" class="checklist-item">
-    <div class="checklist-box">✓</div>
-    <div class="checklist-text"><strong>Approval Statement:</strong> Correct canned approval statement applied and documented in Current Activities.</div>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">✔ Section 10</div>
+<div class="page-title">Analyst Quality Assurance Checklist</div>
+<div class="page-desc">Complete all items before closing any ticket. Click each item to mark complete.</div>
 </div>
-
+<div class="card">
+<div class="card-title"><span class="ico">📊</span> Completion Progress</div>
+<div class="progress-bar-wrap"><div class="progress-bar" id="qa-progress" style="width:0%"></div></div>
+<p id="qa-count" style="font-size:12px;color:var(--grey-500);">0 of 9 items completed</p>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Time Tracking:</strong> Time Type logged on EVERY ticket update or closure — zero exceptions permitted.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Data Classification:</strong> Verified against actual data elements; highest applicable classification enforced.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>UpGuard Validation:</strong> Evidence within 3-year limit; Excel HECVAT converted to PDF prior to upload.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Workflow Execution:</strong> Approved/Rejected via Current Activities panel — never manual Status = Resolved.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Denial Verification:</strong> Rejections confirmed with Stephen Brown or Dan Fast prior to execution.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>UpGuard Score:</strong> Risk rating confirmed at 600+ before approval; if below 600, risks treated and documented.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Evidence Coverage:</strong> Check coverage at or above 90%; gap questionnaire sent if below threshold.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Feed Documentation:</strong> All handoffs, decisions, and status changes documented in TDX ticket feed.</div>
+</div>
+<div class="checklist-item" onclick="toggleCheck(this)">
+<div class="checklist-box">✓</div>
+<div class="checklist-text"><strong>Approval Statement:</strong> Correct canned approval statement applied and documented in Current Activities.</div>
+</div>
+</div>
 <!-- ============================================================ TOOLS -->
 <div class="tab-panel" id="panel-tools">
-  <div class="page-hdr">
-    <div class="page-tag">🧮 Tools</div>
-    <div class="page-title">Analyst Productivity Tools</div>
-    <div class="page-desc">Email generator and vendor tier calculator to speed up routine tasks.</div>
-  </div>
-
-  <div class="grid-2">
-    <div class="tool-card">
-      <div class="card-title"><span class="ico">📧</span> Security Docs Request Generator</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Requestor Name</label>
-          <input class="form-input" id="gen-name" placeholder="e.g. Jane Smith">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Vendor / Software Name</label>
-          <input class="form-input" id="gen-vendor" placeholder="e.g. Salesforce">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Risk Factor</label>
-          <select class="form-select" id="gen-risk">
-            <option>High Business Impact</option>
-            <option>Sensitive Data Classification</option>
-            <option>Enterprise System Integration</option>
-            <option>HIPAA / FERPA Data</option>
-            <option>PCI Payment Processing</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input class="form-input" id="gen-analyst" placeholder="Your name">
-        </div>
-      </div>
-      <button class="copy-btn" onclick="generateEmail()" style="width:100%;justify-content:center;">⚡ Generate Email</button>
-      <div class="code-block" id="gen-output" style="margin-top:12px;display:none;"></div>
-      <button class="copy-btn" id="gen-copy-btn" onclick="copyText('gen-output', this)" style="display:none;">📋 Copy Generated Email</button>
-    </div>
-
-    <div class="tool-card">
-      <div class="card-title"><span class="ico">🧮</span> Vendor Tier Calculator</div>
-      <div class="form-group" style="margin-bottom:12px;">
-        <label class="form-label">Data Classification</label>
-        <select class="form-select" id="tier-data" onchange="calcTier()">
-          <option value="restricted">Restricted</option>
-          <option value="private">Private</option>
-          <option value="internal">Internal Use</option>
-          <option value="public">Public</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin-bottom:16px;">
-        <label class="form-label">Business Impact</label>
-        <select class="form-select" id="tier-impact" onchange="calcTier()">
-          <option value="nominal">Nominal</option>
-          <option value="low">Low</option>
-          <option value="high">High</option>
-          <option value="critical">Critical</option>
-        </select>
-      </div>
-      <div id="tier-result" style="text-align:center;padding:24px;background:var(--grey-100);border-radius:12px;border:2px solid var(--grey-200);">
-        <p style="font-size:12px;color:var(--grey-500);margin-bottom:4px;">SELECT OPTIONS ABOVE</p>
-        <p style="font-size:32px;font-weight:800;color:var(--grey-400);">—</p>
-      </div>
-      <hr class="section-divider">
-      <p style="font-size:11px;color:var(--grey-500);font-weight:700;text-transform:uppercase;margin-bottom:8px;">Tier Legend</p>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="background:#DC2626;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 1 — Critical</span>
-        <span style="background:#F97316;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 2 — High</span>
-        <span style="background:#EAB308;color:#1F2937;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 3 — Moderate</span>
-        <span style="background:#22C55E;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 4 — Low</span>
-      </div>
-    </div>
-  </div>
+<div class="page-hdr">
+<div class="page-tag">🧮 Tools</div>
+<div class="page-title">Analyst Productivity Tools</div>
+<div class="page-desc">Email generator and vendor tier calculator to speed up routine tasks.</div>
 </div>
-
+<div class="grid-2">
+<div class="tool-card">
+<div class="card-title"><span class="ico">📧</span> Security Docs Request Generator</div>
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">Requestor Name</label>
+<input class="form-input" id="gen-name" placeholder="e.g. Jane Smith"/>
+</div>
+<div class="form-group">
+<label class="form-label">Vendor / Software Name</label>
+<input class="form-input" id="gen-vendor" placeholder="e.g. Salesforce"/>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">Risk Factor</label>
+<select class="form-select" id="gen-risk">
+<option>High Business Impact</option>
+<option>Sensitive Data Classification</option>
+<option>Enterprise System Integration</option>
+<option>HIPAA / FERPA Data</option>
+<option>PCI Payment Processing</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Your Name</label>
+<input class="form-input" id="gen-analyst" placeholder="Your name"/>
+</div>
+</div>
+<button class="copy-btn" onclick="generateEmail()" style="width:100%;justify-content:center;">⚡ Generate Email</button>
+<div class="code-block" id="gen-output" style="margin-top:12px;display:none;"></div>
+<button class="copy-btn" id="gen-copy-btn" onclick="copyText('gen-output', this)" style="display:none;">📋 Copy Generated Email</button>
+</div>
+<div class="tool-card">
+<div class="card-title"><span class="ico">🧮</span> Vendor Tier Calculator</div>
+<div class="form-group" style="margin-bottom:12px;">
+<label class="form-label">Data Classification</label>
+<select class="form-select" id="tier-data" onchange="calcTier()">
+<option value="restricted">Restricted</option>
+<option value="private">Private</option>
+<option value="internal">Internal Use</option>
+<option value="public">Public</option>
+</select>
+</div>
+<div class="form-group" style="margin-bottom:16px;">
+<label class="form-label">Business Impact</label>
+<select class="form-select" id="tier-impact" onchange="calcTier()">
+<option value="nominal">Nominal</option>
+<option value="low">Low</option>
+<option value="high">High</option>
+<option value="critical">Critical</option>
+</select>
+</div>
+<div id="tier-result" style="text-align:center;padding:24px;background:var(--grey-100);border-radius:12px;border:2px solid var(--grey-200);">
+<p style="font-size:12px;color:var(--grey-500);margin-bottom:4px;">SELECT OPTIONS ABOVE</p>
+<p style="font-size:32px;font-weight:800;color:var(--grey-400);">—</p>
+</div>
+<hr class="section-divider"/>
+<p style="font-size:11px;color:var(--grey-500);font-weight:700;text-transform:uppercase;margin-bottom:8px;">Tier Legend</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap;">
+<span style="background:#DC2626;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 1 — Critical</span>
+<span style="background:#F97316;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 2 — High</span>
+<span style="background:#EAB308;color:#1F2937;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 3 — Moderate</span>
+<span style="background:#22C55E;color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">Tier 4 — Low</span>
+</div>
+</div>
+</div>
+</div>
 </div><!-- /main -->
-
+<!-- UTK AI Assistant -->
+<button aria-expanded="false" aria-label="Open UTK AI Assistant" class="utk-ai-launcher" id="utk-ai-launcher" type="button">
+<span aria-hidden="true" class="utk-ai-spark">✦</span><span class="utk-ai-label">UTK AI Assistant</span>
+</button>
+<aside aria-hidden="true" aria-label="UTK AI Assistant" class="utk-ai-panel" id="utk-ai-panel">
+<div class="utk-ai-header">
+<div class="utk-ai-title"><span aria-hidden="true">✦</span> UTK AI Assistant <span class="utk-ai-badge">Guide Help</span></div>
+<button aria-label="Close assistant" class="utk-ai-close" id="utk-ai-close" type="button">×</button>
+</div>
+<div class="utk-ai-intro">Ask about TDX workflow, UpGuard, evidence, data classification, or ticket status.</div>
+<div aria-live="polite" class="utk-ai-messages" id="utk-ai-messages">
+<div class="utk-ai-message bot">Hi! I can help you find key guidance in this GRC Analyst Guide. Try a suggested question below or type your own.</div>
+</div>
+<div class="utk-ai-suggestions">
+<button class="utk-ai-chip" data-ai-question="How do I classify data?" type="button">Classify data</button>
+<button class="utk-ai-chip" data-ai-question="When do I request vendor documentation?" type="button">Vendor documents</button>
+<button class="utk-ai-chip" data-ai-question="What are the ticket status rules?" type="button">Ticket status</button>
+<button class="utk-ai-chip" data-ai-question="When do I send a gap questionnaire?" type="button">Gap questionnaire</button>
+</div>
+<form class="utk-ai-form" id="utk-ai-form">
+<input aria-label="Ask the guide" autocomplete="off" class="utk-ai-input" id="utk-ai-input" placeholder="Ask about this guide..." type="text"/>
+<button class="utk-ai-send" type="submit">Send</button>
+</form>
+<div class="utk-ai-disclaimer">Guide helper only. Do not enter restricted data, credentials, or ticket-specific sensitive information.</div>
+</aside>
+<!-- ============================================================
+     REUSABLE LIGHTBOX (single instance, shared by all screenshots)
+     ============================================================ -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeShot()">
+<div class="lightbox-inner">
+<div class="lightbox-bar">
+<span class="lightbox-caption" id="lightbox-caption">Screenshot</span>
+<button class="lightbox-close" onclick="closeShot()" title="Close (Esc)">✕</button>
+</div>
+<div class="lightbox-imgwrap" id="lightbox-imgwrap"></div>
+</div>
+</div>
 <script>
 // TAB SWITCHING
 function switchTab(id) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  document.getElementById('tab-' + id).classList.add('active');
+  const panel = document.getElementById('panel-' + id);
+  const tab = document.getElementById('tab-' + id) ||
+    (['triage', 'status', 'timeout'].includes(id) ? document.getElementById('tab-tdx') : null);
+  if (panel) panel.classList.add('active');
+  if (tab) { tab.classList.add('active'); tab.scrollIntoView({block:'nearest', inline:'nearest'}); }
 }
 
 // ACCORDION
@@ -1647,6 +1336,348 @@ function calcTier() {
     <span style="background:${colors[tier]};color:${textColors[tier]};padding:6px 16px;border-radius:8px;font-weight:700;font-size:14px;">Tier ${tier} — ${labels[tier]}</span>
   `;
 }
+
+/* ============================================================
+   GLOBAL SEARCH
+   ------------------------------------------------------------
+   Indexes every content block in every tab on page load.
+   - Type to search (or press "/" anywhere to focus)
+   - ↑ / ↓ to move through results, Enter to jump, Esc to close
+   - Jumping switches tabs, opens the parent accordion, scrolls
+     to the block and flashes it.
+   No config needed — new content is picked up automatically.
+   ============================================================ */
+const SEARCH_INDEX = [];
+const BLOCK_SELECTOR = '.card, .tool-card, .accordion, .alert, .step-item, .checklist-item, .stat-box';
+
+function buildSearchIndex() {
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    const key = panel.id.replace('panel-', '');
+    const tabBtn = document.getElementById('tab-' + key);
+    const tabLabel = tabBtn ? tabBtn.textContent.replace(/In Progress/i, '').trim() : key;
+    const pageTitle = panel.querySelector('.page-title');
+    const sectionName = pageTitle ? pageTitle.textContent.trim() : tabLabel;
+
+    // Index the section header itself
+    SEARCH_INDEX.push({
+      tabKey: key, tabLabel, el: pageTitle ? pageTitle.closest('.page-hdr') : panel,
+      title: sectionName,
+      text: (panel.querySelector('.page-desc') ? panel.querySelector('.page-desc').textContent : '')
+    });
+
+    panel.querySelectorAll(BLOCK_SELECTOR).forEach(el => {
+      // Skip blocks nested inside another indexed block (avoids duplicates)
+      if (el.parentElement.closest(BLOCK_SELECTOR)) return;
+      const text = el.innerText.replace(/\s+/g, ' ').trim();
+      if (!text) return;
+      SEARCH_INDEX.push({ tabKey: key, tabLabel, el, title: blockTitle(el), text });
+    });
+  });
+}
+
+function blockTitle(el) {
+  const t = el.querySelector('.card-title, .acc-title, .alert-title, .step-text, .checklist-text strong, .stat-label');
+  let title = t ? t.textContent.trim() : el.innerText.trim().split('\n')[0];
+  return title.length > 90 ? title.slice(0, 90) + '…' : title;
+}
+
+function escHtml(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function markAll(str, terms) {
+  let out = escHtml(str);
+  terms.forEach(t => { out = out.replace(new RegExp('(' + escRe(t) + ')', 'gi'), '<mark>$1</mark>'); });
+  return out;
+}
+
+function snippet(text, terms) {
+  const low = text.toLowerCase();
+  let idx = -1;
+  for (const t of terms) { const i = low.indexOf(t.toLowerCase()); if (i > -1 && (idx === -1 || i < idx)) idx = i; }
+  if (idx === -1) idx = 0;
+  const start = Math.max(0, idx - 55);
+  const end = Math.min(text.length, idx + 125);
+  return (start > 0 ? '… ' : '') + markAll(text.slice(start, end), terms) + (end < text.length ? ' …' : '');
+}
+
+let searchHits = [];
+let activeHit = -1;
+
+function runSearch(q) {
+  const box = document.getElementById('search-results');
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  searchHits = []; activeHit = -1;
+
+  if (!terms.length) { box.classList.remove('open'); box.innerHTML = ''; return; }
+
+  SEARCH_INDEX.forEach((entry, i) => {
+    const hay = (entry.title + ' ' + entry.text + ' ' + entry.tabLabel).toLowerCase();
+    if (!terms.every(t => hay.includes(t))) return;
+    let score = 0;
+    terms.forEach(t => {
+      if (entry.title.toLowerCase().includes(t)) score += 10;
+      if (entry.tabLabel.toLowerCase().includes(t)) score += 4;
+      score += (entry.text.toLowerCase().split(t).length - 1);
+    });
+    searchHits.push({ ...entry, score, idx: i });
+  });
+
+  searchHits.sort((a, b) => b.score - a.score);
+  searchHits = searchHits.slice(0, 40);
+
+  if (!searchHits.length) {
+    box.innerHTML = '<div class="sr-empty"><span class="big">🔍</span>No matches for <strong>' + escHtml(q) + '</strong><br>Try a status name, a tool (UpGuard, TDX, HECVAT), or a person.</div>';
+    box.classList.add('open');
+    return;
+  }
+
+  let html = '<div class="search-meta">' + searchHits.length + ' result' + (searchHits.length === 1 ? '' : 's') + ' — ↑ ↓ to browse, Enter to open</div>';
+  let lastTab = null;
+  searchHits.forEach((hit, i) => {
+    if (hit.tabLabel !== lastTab) { html += '<div class="sr-group">' + escHtml(hit.tabLabel) + '</div>'; lastTab = hit.tabLabel; }
+    html += '<div class="sr-item" data-hit="' + i + '">' +
+              '<div class="sr-title">' + markAll(hit.title, terms) + '</div>' +
+              '<div class="sr-snip">' + snippet(hit.text, terms) + '</div>' +
+            '</div>';
+  });
+  box.innerHTML = html;
+  box.classList.add('open');
+
+  box.querySelectorAll('.sr-item').forEach(item => {
+    item.addEventListener('click', () => gotoHit(parseInt(item.dataset.hit, 10)));
+  });
+}
+
+function gotoHit(i) {
+  const hit = searchHits[i];
+  if (!hit) return;
+  switchTab(hit.tabKey);
+
+  // Open the accordion (or the one containing this block) if collapsed
+  const acc = hit.el.classList.contains('accordion') ? hit.el : hit.el.closest('.accordion');
+  if (acc) {
+    const head = acc.querySelector('.acc-head'), body = acc.querySelector('.acc-body');
+    if (head && !head.classList.contains('open')) { head.classList.add('open'); body.classList.add('open'); }
+  }
+
+  closeSearch();
+  setTimeout(() => {
+    hit.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    hit.el.classList.remove('search-flash');
+    void hit.el.offsetWidth;
+    hit.el.classList.add('search-flash');
+    setTimeout(() => hit.el.classList.remove('search-flash'), 2000);
+  }, 60);
+}
+
+function setActiveHit(n) {
+  const items = document.querySelectorAll('.sr-item');
+  if (!items.length) return;
+  activeHit = (n + items.length) % items.length;
+  items.forEach(el => el.classList.remove('active'));
+  const cur = items[activeHit];
+  cur.classList.add('active');
+  cur.scrollIntoView({ block: 'nearest' });
+}
+
+function closeSearch() {
+  document.getElementById('search-results').classList.remove('open');
+}
+
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+let searchTimer;
+
+searchInput.addEventListener('input', () => {
+  searchClear.classList.toggle('show', searchInput.value.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runSearch(searchInput.value.trim()), 120);
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) runSearch(searchInput.value.trim());
+});
+
+searchInput.addEventListener('keydown', e => {
+  const open = document.getElementById('search-results').classList.contains('open');
+  if (e.key === 'ArrowDown' && open) { e.preventDefault(); setActiveHit(activeHit + 1); }
+  else if (e.key === 'ArrowUp' && open) { e.preventDefault(); setActiveHit(activeHit - 1); }
+  else if (e.key === 'Enter') { e.preventDefault(); gotoHit(activeHit > -1 ? activeHit : 0); }
+  else if (e.key === 'Escape') { closeSearch(); searchInput.blur(); }
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = ''; searchClear.classList.remove('show'); closeSearch(); searchInput.focus();
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) closeSearch();
+});
+
+// "/" focuses search from anywhere
+document.addEventListener('keydown', e => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if (e.key === '/' && !typing) { e.preventDefault(); searchInput.focus(); searchInput.select(); }
+});
+
+/* ============================================================
+   SCREENSHOT LIGHTBOX
+   ============================================================
+   HOW TO ADD YOUR OWN PHOTOS
+   --------------------------------------------------------------
+   Only edit the SHOTS object below. Each entry maps a KEY to:
+     { src: "...path or data URI...", caption: "..." }
+
+   OPTION A — External image files (recommended):
+     1. Make an "images" folder next to this HTML file.
+     2. Drop your screenshots in it (e.g. triage-step1.png).
+     3. Point src to it:  src: "images/triage-step1.png"
+
+   OPTION B — Embed the image directly (single self-contained file):
+     Paste a base64 data URI:
+       src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg..."
+
+   TO ADD A BUTTON ANYWHERE IN THE PAGE:
+     <button class="shot-btn" data-shot="MY_KEY">📷 View Screenshot</button>
+   ============================================================ */
+const SHOTS = {
+  "upguard-step1": { src: "", caption: "UpGuard — Monitor / create the vendor" },
+  "upguard-step2": { src: "", caption: "UpGuard — Edit the vendor profile (summary, attributes, labels, portfolio)" },
+  "upguard-step4": { src: "", caption: "UpGuard — Add & analyze evidence in the Security Profile" }
+};
+
+function openShot(key) {
+  const shot = SHOTS[key];
+  const wrap = document.getElementById('lightbox-imgwrap');
+  const cap  = document.getElementById('lightbox-caption');
+  const box  = document.getElementById('lightbox');
+  if (!shot) return;
+
+  cap.textContent = shot.caption || 'Screenshot';
+
+  if (shot.src && shot.src.trim() !== "") {
+    wrap.innerHTML = '<img src="' + shot.src + '" alt="' +
+      (shot.caption || 'screenshot').replace(/"/g,'&quot;') +
+      '" onerror="this.parentNode.innerHTML=\'<div class=&quot;lightbox-missing&quot;><div class=&quot;big&quot;>🖼️</div>Image not found.<br>Check the path in the SHOTS config.</div>\'">';
+  } else {
+    wrap.innerHTML =
+      '<div class="lightbox-missing"><div class="big">📸</div>' +
+      'Screenshot coming soon.<br>Add an image for <code>"' + key + '"</code> in the SHOTS config.</div>';
+  }
+  box.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeShot() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function (e) {
+  const trigger = e.target.closest('[data-shot]');
+  if (trigger) openShot(trigger.getAttribute('data-shot'));
+});
+
+document.querySelectorAll('[data-shot]').forEach(function (el) {
+  const s = SHOTS[el.getAttribute('data-shot')];
+  if (!s || !s.src || s.src.trim() === "") el.classList.add('missing');
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeShot();
+});
+
+// Build the search index last, after all content is in the DOM
+buildSearchIndex();
+
+
+// UTK AI Assistant — guide-grounded helper
+(function () {
+  const panel = document.getElementById('utk-ai-panel');
+  const launcher = document.getElementById('utk-ai-launcher');
+  const close = document.getElementById('utk-ai-close');
+  const form = document.getElementById('utk-ai-form');
+  const input = document.getElementById('utk-ai-input');
+  const messages = document.getElementById('utk-ai-messages');
+
+  function setOpen(open) {
+    panel.classList.toggle('open', open);
+    panel.setAttribute('aria-hidden', String(!open));
+    launcher.setAttribute('aria-expanded', String(open));
+    if (open) input.focus();
+  }
+  function addMessage(text, role) {
+    const message = document.createElement('div');
+    message.className = 'utk-ai-message ' + role;
+    message.textContent = text;
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  function go(tab, label) {
+    return label + ' Open the ' + tab + ' tab for the approved procedure.';
+  }
+  function answer(question) {
+    const q = question.toLowerCase();
+
+    // Exact guide rules first. These answers stay within the approved guide content.
+    if (/(foreign adversary|adversary attestation)/.test(q)) {
+      return 'Pause the review and ask the requester to confirm whether the foreign-adversary attestation was selected in error. Do not continue until it is resolved.';
+    }
+    if (/(contract|contracts review)/.test(q)) {
+      return 'For a contracts review, assign the ticket to Stephen Brown, Dan Fast, or Brian Stubblefield. Add a feed comment explaining the handoff and include the relevant agreement and questions.';
+    }
+    if (/(vendor meeting|meeting with vendor|schedule.*meeting)/.test(q)) {
+      return 'Schedule a vendor review meeting when written documentation does not answer material security questions. Cover data flow, hosting, access, incident response, backups, and remediation; then document actions and decisions in TDX.';
+    }
+    if (/(gap|questionnaire|coverage|90%)/.test(q)) {
+      return 'Send a gap questionnaire when evidence coverage is below 90% or required controls lack evidence. Use the standard two-week due date and review the vendor response in UpGuard.';
+    }
+    if (/(soc|iso|hecvat|hitrust|evidence|assurance|documentation)/.test(q)) {
+      return 'Check UpGuard and prior approval first. When current assurance evidence is missing or outdated, request a SOC 2 Type II report, ISO 27001 documentation, completed HECVAT, or comparable evidence. Evidence should generally be current within three years.';
+    }
+    if (/(restricted|private|internal use|public|classif|data type|sensitivity)/.test(q)) {
+      return 'Classify using the actual data handled and apply the highest level: Public for public information; Internal Use Only for routine non-public data; Private for FERPA academic records, TNID, non-public IP, or sensitive operations; Restricted for PII, PHI, PCI, IDs, accounts, credentials, biometrics, or identifiable research data.';
+    }
+    if (/(nominal|business impact|criticality|outage|high impact|low impact|critical impact)/.test(q)) {
+      return 'Business Impact is based on an outage’s effect on UT as a whole: Nominal is minimal after more than two weeks; Low is adverse over 72 hours to two weeks; High is severe University-wide disruption within 72 hours; Critical can create life-safety risk.';
+    }
+    if (/(new|open|in progress|awaiting response|on hold|status|time tracking|timeout|stalled)/.test(q)) {
+      return 'Use In Progress while actively working and Awaiting Response while waiting on a requester or vendor. The current time map is: New = Time Started; Open and In Progress = Time Running; Awaiting Response and On Hold = Time Paused. For no response, follow the Timeout & Stalled Tickets procedure.';
+    }
+    if (/(approve|approval|reject|denial|resolved|current activities)/.test(q)) {
+      return 'For Security | Data and Technology Risk Review tickets, use Current Activities → Approve Ticket or Reject Ticket. Do not manually set the status to Resolved. Escalate denials to Stephen Brown or Dan Fast before execution.';
+    }
+    if (/(upguard|vendor profile|risk assessment|score)/.test(q)) {
+      return 'Review the existing UpGuard profile, current evidence, open risks, and prior conditions. If no profile exists, create and monitor the vendor, add and analyze evidence, then review the vendor profile. A score above 600 passes the score threshold, but evidence and material risks still need review.';
+    }
+    if (/(self-hosted|vendor-hosted|hybrid|deployment)/.test(q)) {
+      return 'Self-hosted means UT hosts and manages the service; vendor-hosted means the vendor hosts or manages it; hybrid means both environments are involved. Confirm where data is stored, processed, backed up, and accessed.';
+    }
+
+    // Safe fallback: pull the most relevant guide text without inventing an answer.
+    const words = q.match(/[a-z0-9]{4,}/g) || [];
+    const candidates = Array.from(document.querySelectorAll('.tab-panel .card, .tab-panel .alert'))
+      .map(el => {
+        const t = el.innerText.replace(/\s+/g, ' ').trim();
+        const score = words.reduce((n, w) => n + (t.toLowerCase().includes(w) ? 1 : 0), 0);
+        return { t, score };
+      }).filter(x => x.score > 0).sort((a,b) => b.score - a.score);
+    if (candidates.length) return 'I found related guide content: ' + candidates[0].t.slice(0, 420) + (candidates[0].t.length > 420 ? '…' : '');
+    return 'I can answer only from this guide. Try asking about data classification, business impact, TDX status or timeouts, UpGuard, vendor documentation, gap questionnaires, vendor meetings, contracts review, or approval and denial. I will answer only from the procedures in this guide.';
+  }
+  function ask(question) {
+    const clean = question.trim();
+    if (!clean) return;
+    addMessage(clean, 'user');
+    input.value = '';
+    window.setTimeout(() => addMessage(answer(clean), 'bot'), 120);
+  }
+  launcher.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+  close.addEventListener('click', () => setOpen(false));
+  form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+  document.querySelectorAll('[data-ai-question]').forEach(button => button.addEventListener('click', () => ask(button.getAttribute('data-ai-question'))));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('open')) setOpen(false); });
+}());
 </script>
 </body>
 </html>
